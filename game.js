@@ -17,7 +17,6 @@ var drawInterval;
 
 
 
-
 var imgSprite = new Image();
 imgSprite.src = 'sprite4.png';
 imgSprite.addEventListener('load',init,false);
@@ -43,8 +42,11 @@ function playGame(){
 }
 
 function draw() {
- avatar1.draw();
- achtergrond1.draw();
+
+	achtergrond1.draw();
+	avatar1.draw();
+	
+	
 }
 
 function startDrawing() {
@@ -110,6 +112,7 @@ this.bottomY = this.drawY + this.height;
 this.laden = false;
 
 
+
 }
 
 function Achtergrond(){
@@ -119,7 +122,7 @@ function Achtergrond(){
     this.drawY = 0;
     this.width = 2949;
     this.height= 600;
-    this.speed = 3;
+    this.speed = 4;
     this.isUpKey = false;
 	this.isRightKey = false;
 	this.isDownKey = false;
@@ -197,11 +200,9 @@ Avatar.prototype.checkKeys = function(){
 	if(this.isDownKey && this.bottomY < 490){
 		this.drawY += this.speed;
 	}
-	if(this.isSpaceBarKey && this.topY === 110 && achtergrond1.drawX <= 135 && achtergrond1.drawX >= 27)
+	if(this.isSpaceBarKey)
 	{
-		console.log('koelkast event');
-		//drawVoorbeeldVraag();
-		clearCtxBg();
+		console.log('spatiebalk!');
 	}
 	if(this.isRkey){
 		console.log('Y:' , this.drawY);
