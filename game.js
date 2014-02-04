@@ -43,6 +43,7 @@ var ctxHand = canvasHand.getContext('2d');
 
 
 
+
   
 
 var helpIsDrawn = false;
@@ -124,10 +125,12 @@ imgBot.src = 'bot.png';
 var imgHand = new Image();
 imgHand.src = 'cartoonhand.png';
 
-
+var imgTelefoonSms = new Image();
+imgTelefoonSms.src = 'telefoonsms.png';
 
 var sound = new Audio('muziek.mp3');
 
+var checklistGetekend = false;
 
 
 //var imgAfvinken = new Image();
@@ -212,7 +215,13 @@ function drawResultatenScherm(){
 }
 
 function drawTelefoon(){
+
+if(telefoonIsGetekend === 0)
+{
 	ctxTelefoon.drawImage(imgTelefoon,0,0,800,600,0,0,800,600);
+	hand.draw();
+	telefoonIsGetekend = 1;
+}
 	
 }
 
@@ -660,9 +669,7 @@ function clearCtxHand(){
 ctxHand.clearRect(0,0,800,600);
 }
 function telefoonSluiten(){
-telefoonIsGetekend = 0;
- magHandTekenen = false;
-console.log(telefoonIsGetekend);
+telefoonIsGetekend = 3;
 clearCtxTelefoon();
 clearCtxHand();
 
@@ -702,6 +709,10 @@ Achtergrond.prototype.checkKeys = function() {
 		console.log('avatarX:', this.drawX);
 		console.log('handX:', hand.drawX);
 	}
+	if(telefoonIsGetekend === 3)
+	{
+		clearCtxHand(0,0,800,600);
+		}
 	
 }
 
@@ -720,41 +731,51 @@ Hand.prototype.checkKeys = function(){
 	if(this.isDownKey && this.drawY <= 462){
 		this.drawY += 20;
 	}
-	if(this.isSpaceBarKey === true && this.drawX >= 270 && this.drawX <= 310 && this.drawY >= 170 && this.drawY <= 190 && vraag10Beantwoord === false )// berekening voor de knop van de eerste telefoon vraag
+	if(this.isSpaceBarKey === true && this.drawX >= 270 && this.drawX <= 310 && this.drawY >= 170 && this.drawY <= 190 && vraag10Beantwoord === false  && checklistGetekend === false)// berekening voor de knop van de eerste telefoon vraag
 	{
 		tekenVraag = 10;
 		vraag10Beantwoord = true;
 
 
 	}
-		if(this.isSpaceBarKey === true && this.drawX >= 370 && this.drawX <= 410 && this.drawY >= 170 && this.drawY <= 190 && vraag11Beantwoord === false)// berekening voor de knop van de tweede telefoon vraag
+		if(this.isSpaceBarKey === true && this.drawX >= 370 && this.drawX <= 410 && this.drawY >= 170 && this.drawY <= 190 && vraag11Beantwoord === false && checklistGetekend === false)// berekening voor de knop van de tweede telefoon vraag
 		{
 			tekenVraag = 11;
 			vraag11Beantwoord = true;
 		
 			//console.log('telefoon vraag 2');
 		}
-	if(this.isSpaceBarKey === true && this.drawX >= 490 && this.drawX <=530 && this.drawY >= 170 && this.drawY <= 190 && vraag12Beantwoord === false)//berekening voor de knop van de derde telefoon vraag
+	if(this.isSpaceBarKey === true && this.drawX >= 490 && this.drawX <=530 && this.drawY >= 170 && this.drawY <= 190 && vraag12Beantwoord === false && checklistGetekend === false)//berekening voor de knop van de derde telefoon vraag
 		{
 			tekenVraag = 12;
 			vraag12Beantwoord = true;
 		}
-	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 230 && this.drawY <= 290)// berekening voor de knop van de checklist
+	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 230 && this.drawY <= 290 && checklistGetekend === false)// berekening voor de knop van de checklist
 	{
+	
 		checklist.draw();
+		checklistGetekend = true;
+		console.log(checklistGetekend);
 	}
-	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 330 && this.drawY <= 390)//berekening voor de knop van het sluiten
+	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 330 && this.drawY <= 390 && checklistGetekend === false)//berekening voor de knop van het sluiten
 	{
-		magHandTekenen = false;
 		telefoonSluiten();
+		console.log('sluiten');
 		
 	}
 	if(this.isSpaceBarKey === true && this.drawX >=430 && this.drawX <= 530  && this.drawY === 90 )//berkening voor de home knop
 	{
-
+		checklistGetekend = false;
 		ctxChecklist.clearRect(0,0,800,600);
 		//drawTelefoon();
 	}
+		if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 290  && this.drawY >= 90 && this.drawY <= 130 && checklistGetekend === false  )//berkening voor de berichten knop
+	{
+		checklistGetekend = true;
+		ctxChecklist.clearRect(0,0,800,600);
+		ctxChecklist.drawImage(imgTelefoonSms,0,0,800,600,0,0,800,600);
+	}
+
 	
 	
 }
@@ -812,9 +833,9 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 9;
 		vraag9Beantwoord = true;
 		}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -988 && achtergrond1.drawX >= -1036 && this.drawY === 50 )// berekening voor de hond
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -988 && achtergrond1.drawX >= -1036 && this.drawY === 50 )// berekening voor de telefoon
 		{
-			console.log('tekenen');
+			drawTelefoon();
 		}
 
 	
@@ -963,6 +984,7 @@ function checkKeyDown(e){
 		}
 		else{
 		avatar1.isUpKey=true;
+			telefoonIsGetekend = 0;
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
 		console.log('avatar omhoog');
 		}
@@ -984,6 +1006,7 @@ function checkKeyDown(e){
 			{
 				console.log('poppetje naar rechts');
 				achtergrond1.isRightKey=true;
+				telefoonIsGetekend = 0;
 				e.preventDefault();
 			}
 	}
@@ -996,6 +1019,7 @@ function checkKeyDown(e){
 		}
 		else{
 		avatar1.isDownKey=true;
+			telefoonIsGetekend = 0;
 		e.preventDefault();
 		}
 	}
@@ -1015,6 +1039,7 @@ function checkKeyDown(e){
 		else
 		{
 			achtergrond1.isLeftKey=true;
+				telefoonIsGetekend = 0;
 			e.preventDefault();
 		}
 	}
@@ -1229,23 +1254,21 @@ function checkKeyDown(e){
 
 	   e.preventDefault();
 	}
-		if(keyID === 84){// t key
-			if(telefoonIsGetekend === 0)
-			{
-			 magHandTekenen = false;
-			drawTelefoon();
-			e.preventDefault();
-			telefoonIsGetekend = 1;
-			}
-		if(telefoonIsGetekend === 1)
-		{
-		magHandTekenen = true;
-		hand.draw();
-		}
-		}
-		if(keyID === 90){
-
-		}
+	//	if(keyID === 84){// t key
+		//	if(telefoonIsGetekend === 0)
+		//	{
+			// magHandTekenen = false;
+			//drawTelefoon();
+			//e.preventDefault();
+			//telefoonIsGetekend = 1;
+			//}
+	//	if(telefoonIsGetekend === 1)
+		//{
+		//magHandTekenen = true;
+		//hand.draw();
+		//}
+		//}
+	
 		
 	
 
