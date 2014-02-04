@@ -25,6 +25,18 @@ var ctxHelp = canvasHelp.getContext('2d');
 var canvasTelefoon = document.getElementById('canvasHelp');
 var ctxTelefoon = canvasTelefoon.getContext('2d');
 
+var canvasText = document.getElementById('canvasText');
+var ctxText = canvasText.getContext('2d');
+
+
+var canvasTelefoon = document.getElementById('canvasTelefoon');
+var ctxTelefoon= canvasTelefoon.getContext('2d');
+
+var canvasHand = document.getElementById('canvasHand');
+var ctxHand = canvasHand.getContext('2d');
+
+
+
 //var canvasAfvinken = document.getElementById('canvasAfvinken');
 //var ctxAfvinken = canvasAfvinken.getContext('2d');
 
@@ -67,12 +79,15 @@ var vraag7Beantwoord = false;
 var vraag8Beantwoord = false;
 var vraag9Beantwoord = false;
 var vraag10Beantwoord = false;
+var vraag11Beantwoord = false;
+var vraag12Beantwoord = false;
 
 var score = 0;
+var telefoonIsGetekend;
 
 
 var imgVraag = new Image();
-imgVraag.src = 'vragensprite.png';
+imgVraag.src = 'vragen.png';
 
 var imgSprite = new Image();
 imgSprite.src = 'spritedefinitief.png';
@@ -91,7 +106,7 @@ var imgMenu = new Image();
 imgMenu.src = 'introductie.png';
 
 var imgChecklist = new Image();
-imgChecklist.src = 'checklist.png';
+imgChecklist.src = 'telefoonchecklist.png';
 
 var imgTelefoon = new Image();
 imgTelefoon.src = 'telefoon.png';
@@ -99,8 +114,20 @@ imgTelefoon.src = 'telefoon.png';
 var imgHelpMenu = new Image();
 imgHelpMenu.src = 'helpmenu.png';
 
+var imgText = new Image();
+imgText.src = 'tekst.png';
+
+var imgBot = new Image();
+imgBot.src = 'bot.png';
+
+var imgHand = new Image();
+imgHand.src = 'cartoonhand.png';
+
+
+
 var sound = new Audio('music.mp3');
-sound.play();
+//sound.play();
+
 
 //var imgAfvinken = new Image();
 //imgAfvinken.src = 'menu.png';
@@ -116,9 +143,11 @@ function init() {
 function playGame(){
     startDrawing();
 	
+	text = new Text();
 	resultaat = new Resultaat();
 	avatar1 = new Avatar();
 	checklist = new Checklist();
+	hand = new Hand();
 	//afvinken1 = new Afvinken();
 	
 	vraag1 = new Vraag();
@@ -127,6 +156,12 @@ function playGame(){
 	vraag4 = new Vraag();
 	vraag5 = new Vraag();
 	vraag6 = new Vraag();
+	vraag7 = new Vraag();
+	vraag8 = new Vraag();
+	vraag9 = new Vraag();
+	vraag10 = new Vraag();
+	vraag11 = new Vraag();
+	vraag12 = new Vraag();
 	
 	
 	achtergrond1 = new Achtergrond();
@@ -136,15 +171,20 @@ function playGame(){
 }
 
 function draw() {
-
+	
 	achtergrond1.draw();
 	avatar1.draw();
-	checklist.draw();
 	//afvinken1.draw();
 	drawMenu();
+	//drawBot();
+	//text.draw();
+	}
 	
-}
 
+//function drawBot(){
+//console.log('bot tekenen');
+//ctxBot.drawImage(imgBot,0,0,400,400,100,302,400,400);
+//}
 function startDrawing() {
     stopDrawing();
     drawInterval = setInterval(draw,fps);
@@ -169,8 +209,10 @@ function drawResultatenScherm(){
 }
 
 function drawTelefoon(){
-	ctxTelefoon.drawImage(imgTelefoon,0,0,600,600,100,0,600,600);
+	ctxTelefoon.drawImage(imgTelefoon,0,0,800,600,0,0,800,600);
+	telefoonIsGetekend = 1;
 }
+
 
 
 // start of clear funties
@@ -186,6 +228,10 @@ function clearCtxAvatar(){
 
 function clearCtxMenu(){
 	ctxMenu.clearRect(0,0,800,600);
+}
+
+function clearCtxHand(){
+	ctxHand.clearRect(0,0,800,600);
 }
 
 function clearAll(){ 
@@ -205,7 +251,7 @@ this.srcX=0;//begintpunt van x
 this.srcY=600;//begintpunt van y
 this.drawX=300;//x punt waar het getekent wordt op het canvas// was eerst 300!
 this.drawY=200;//y punt waar het getekent wordt op het canvas
-this.width=100;//breedte van de char
+this.width=90;//breedte van de char
 this.height=190;//hoogte van de char
 this.speed = 3;
 this.isUpKey = false;
@@ -225,6 +271,15 @@ this.laden = false;
 
 }
 
+function Text()
+{
+	this.srcX = 200;
+	this.srcY = 0;
+    this.drawX =0;
+    this.drawY = 0;
+    this.width = 200;
+    this.height= 186 ;
+}
 function Vraag(){
 	this.srcX;
 	this.srcY = 0;
@@ -267,6 +322,8 @@ function Achtergrond(){
 	this.rightX = this.drawX + this.width;
 	this.topY = this.drawY;
 	this.bottomY = this.drawY + this.height;
+	this.achtergrondRight = false;
+	this.achtergrondLeft 	 = false;
     
 }
 
@@ -287,6 +344,23 @@ function Resultaat(){
     this.height= 70;
 }
 
+function Hand(){
+	this.srcX= 0;
+    this.srcY = 0;
+	this.speed = 3;
+    this.drawX =  510;
+    this.drawY = 330;
+    this.width = 27;
+    this.height= 30;
+	this.isUpKey = false;
+	this.isRightKey = false;
+	this.isDownKey = false;
+	this.isLeftKey = false;
+	this.isEscapeKey=false;
+	this.isSpaceBarKey=false;
+	this.isRkey=false;
+}
+
 function  removeEventListener()
 	{
 		document.removeEventListener('keydown',checkKeyDown,false);
@@ -300,11 +374,34 @@ function drawHelpMenu() {
 	ctxHelp.drawImage(imgHelpMenu,0,0,800,600,0,0,800,600);
 	helpIsDrawn = true;
 	}
+
+}
+function drawPreviousPage(){
+	ctxHelp.clearRect(0,0,gameWidth,gameHeight);
+	ctxHelp.drawImage(imgHelpMenu,0,0,800,600,0,0,800,600);
 }
 
 function drawNextPage(){
 	ctxHelp.clearRect(0,0,gameWidth,gameHeight);
 	ctxHelp.drawImage(imgHelpMenu,800,0,800,600,0,0,800,600);
+}
+
+Hand.prototype.draw = function(){
+this.updateCoors();
+clearCtxHand();
+this.checkKeys();
+
+ctxHand.drawImage(imgHand,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+avatar1.checkTekenenVanVraag();
+}
+
+
+Text.prototype.draw = function(){
+	switch(tekstnumer)
+	{
+		//case 0: 
+	}
+ ctxText.drawImage(imgText,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 }
 
 Afvinken.prototype.draw = function(){
@@ -417,6 +514,13 @@ this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
 }
 
+Hand.prototype.updateCoors = function(){
+this.leftX = this.drawX;
+this.rightX = this.drawX + this.width;
+this.topY = this.drawY;
+this.bottomY = this.drawY + this.height;
+}
+
 Vraag.prototype.draw = function(){
 //clearCtxAvatar();
 //clearCtxBg();
@@ -425,7 +529,7 @@ this.checkKeys();
 }
 
 Checklist.prototype.draw = function(){
-ctxChecklist.drawImage(imgChecklist,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+ctxChecklist.drawImage(imgChecklist,0,0,800,600,0,0,800,600);
 }
 
 Vraag.prototype.checkKeys= function(){
@@ -514,6 +618,7 @@ function resetGame(){
 Achtergrond.prototype.checkKeys = function() {
 	if(this.isRightKey && this.drawX >= -3656) {
 		this.drawX -= this.speed;
+		achtergrondRight = true;
 	}
 	if(this.isLeftKey &&  this.drawX <= -8)
 	{
@@ -525,14 +630,63 @@ Achtergrond.prototype.checkKeys = function() {
 	}
 	if(this.isEkey)
 	{
-		console.log('X:', this.drawX);
-		
+		console.log('avatarX:', this.drawX);
+		console.log('handX:', hand.drawX);
 	}
 	
 }
 
-
-
+function drawChecklist()
+{
+	ctxTelefoon
+}
+Hand.prototype.checkKeys = function(){
+	if(this.isRightKey && this.drawX <= 516) {
+		this.drawX += 20;
+	}
+	if(this.isLeftKey  && this.drawX >= 258)
+	{
+		this.drawX -= 20;
+	}	
+		if(this.isUpKey && this.drawY >= 78){
+		this.drawY -= 20;
+	}
+	if(this.isDownKey && this.drawY <= 462){
+		this.drawY += 20;
+	}
+	if(this.isSpaceBarKey === true && this.drawX >= 270 && this.drawX <= 310 && this.drawY >= 170 && this.drawY <= 190 && vraag10Beantwoord === false)// berekening voor de knop van de eerste telefoon vraag
+	{
+		tekenVraag = 10;
+		vraag10Beantwoord = true;
+		//console.log('telefoon vraag 1');
+	}
+		if(this.isSpaceBarKey === true && this.drawX >= 370 && this.drawX <= 410 && this.drawY >= 170 && this.drawY <= 190 && vraag11Beantwoord === false)// berekening voor de knop van de tweede telefoon vraag
+		{
+			tekenVraag = 11;
+			vraag11Beantwoord = true;
+		
+			//console.log('telefoon vraag 2');
+		}
+	if(this.isSpaceBarKey === true && this.drawX >= 490 && this.drawX <=530 && this.drawY >= 170 && this.drawY <= 190 && vraag12Beantwoord === false)//berekening voor de knop van de derde telefoon vraag
+		{
+			tekenVraag = 12;
+			vraag12Beantwoord = true;
+		}
+	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 230 && this.drawY <= 290)// berekening voor de knop van de checklist
+	{
+		checklist.draw();
+	}
+	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 330 && this.drawY <= 390)//berekening voor de knop van het sluiten
+	{
+		console.log('sluiten');
+	}
+	if(this.isSpaceBarKey === true && this.drawX >=430 && this.drawX <= 530  && this.drawY === 90 )//berkening voor de home knop
+	{
+		ctxTelefoon.clearRect(0,0,800,600);
+		ctxChecklist.clearRect(0,0,800,600);
+		drawTelefoon();
+	}
+}
 Avatar.prototype.checkKeys = function(){
 	if(this.isUpKey &&this.topY > 50){
 		this.drawY -= this.speed;
@@ -567,6 +721,20 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 5;
 		vraag5Beantwoord = true;
 	}
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -1460 && achtergrond1.drawX >= -1492 && this.drawY === 50 && vraag6Beantwoord === false)//berekening voor de prullebak
+	{
+		tekenVraag = 6;
+		vraag6Beantwoord = true;
+	}
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -1868 && achtergrond1.drawX >= -1892 && this.drawY === 50 && vraag7Beantwoord === false)//berekening voor de agenda
+	{
+		tekenVraag = 7;
+		vraag7Beantwoord = true;
+	}
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -3400 && achtergrond1.drawX >= -3460 && this.drawY === 50)// berekening voor de hond
+		{
+				console.log('woef');
+		}
 	
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -1900  && achtergrond1.drawX >=-2012 && vraag1Beantwoord === true && vraag2Beantwoord === true && 
 	vraag3Beantwoord === true && vraag4Beantwoord === true && vraag5Beantwoord === true && this.drawY === 110)
@@ -575,8 +743,9 @@ Avatar.prototype.checkKeys = function(){
 	}
 
 	if(this.isRkey){
-		console.log('Y:' , this.drawY);
-		//console.log(this.drawX);
+		
+		console.log('avatarY:' , this.drawY);
+		console.log('handY:' , hand.drawY);
 	}
 }
 
@@ -615,12 +784,37 @@ Avatar.prototype.checkTekenenVanVraag = function(){
 		vraag5.srcX = 2400;
 		vraag5.draw();
 		break;
-	case 6:
+	case 6://prullebak
 	
 		clearCtxMenu();
+		vraag6.srcX = 6400;
 		vraag6.draw();
 		break;
-	}
+	
+	case 7: //agenda
+	clearCtxMenu();
+	vraag7.srcX = 3200;
+	vraag7.draw();
+	break;
+	
+	case 10: //telefoon vraag 1
+	clearCtxHand();
+	vraag10.srcX = 8000;
+	vraag10.draw();
+	break;
+	
+	case 11: //telefoon vraag 2
+	clearCtxHand();
+	vraag11.srcX = 8800;
+	vraag11.draw();
+	break;
+	
+	case 12: //telefoonvraag 3
+	clearCtxHand();
+	vraag12.srcX = 5600;
+	vraag12.draw();
+	break;
+}
 }
 function clearCtxAvatar() {
     ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
@@ -666,8 +860,18 @@ function mouseClicked(e){
 function checkKeyDown(e){
 	var keyID = e.keyCode || e.which;
 	if (keyID === 38 || keyID ===87) { //38 betekent pijl omhoog,87 betekent w toets
+		if(telefoonIsGetekend === 1)
+		{
+			hand.isUpKey= true;
+			hand.draw();
+				e.preventDefault();
+			
+		}
+		else{
 		avatar1.isUpKey=true;
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
+		console.log('avatar omhoog');
+		}
 	}
 	if (keyID === 39 || keyID ===68) //rechter pijl of d key
 	{ 
@@ -675,6 +879,12 @@ function checkKeyDown(e){
 			{
 			//console.log('volgende pagina');
 			drawNextPage();
+				e.preventDefault();
+			}
+		else if(telefoonIsGetekend === 1){
+			hand.isRightKey = true;
+			hand.draw();
+				e.preventDefault();
 			}
 		else
 			{
@@ -684,18 +894,47 @@ function checkKeyDown(e){
 			}
 	}
 	if (keyID === 40 || keyID ===83) { 
+	 if(telefoonIsGetekend === 1)
+		{
+			hand.isDownKey = true;
+			hand.draw();
+			e.preventDefault();
+		}
+		else{
 		avatar1.isDownKey=true;
 		e.preventDefault();
+		}
 	}
-	if (keyID === 37 || keyID ===65) { 
-		achtergrond1.isLeftKey=true;
-		e.preventDefault();
+	if (keyID === 37 || keyID ===65) { //linker pijl en a toets
+		if(helpIsDrawn === true)
+			{
+			//console.log('volgende pagina');
+			drawPreviousPage();
+				e.preventDefault();
+			}
+		else if(telefoonIsGetekend === 1)
+		{
+			hand.isLeftKey=true;
+			hand.draw();
+				e.preventDefault();
+		}
+		else
+		{
+			achtergrond1.isLeftKey=true;
+			e.preventDefault();
+		}
 	}
 	if(keyID=== 27){
 		achtergrond1.isEscapeKey=true;
 		e.preventDefault();
 	}
 	if(keyID === 32){
+		if(telefoonIsGetekend === 1)
+		{
+			hand.isSpaceBarKey=true;
+			hand.draw();
+			e.preventDefault();
+		}
 		avatar1.isSpaceBarKey=true;
 		e.preventDefault();
 	}
@@ -757,7 +996,7 @@ function checkKeyDown(e){
 		vraag4.isTwoKey = true;
 		e.preventDefault();
 	}
-	if((keyID === 50 || keyID=== 98) && tekenVraag ===45){
+	if((keyID === 50 || keyID=== 98) && tekenVraag ===5){
 		vraag5.isTwoKey = true;
 		e.preventDefault();
 	}
@@ -781,12 +1020,13 @@ function checkKeyDown(e){
 		vraag5.isThreeKey = true;
 		e.preventDefault();
 	}
-		if(keyID === 122){
+		if(keyID === 122){//f11
 		switch(magHelpTekenen)
 		{
 			case(0):
 			ctxHelp.clearRect(0,0,800,600);
 			magHelpTekenen = 1;
+			helpIsDrawn = false;
 			break;
 			
 			case(1):
@@ -794,14 +1034,15 @@ function checkKeyDown(e){
 			magHelpTekenen = 0;
 			break;
 		}
+
 	   e.preventDefault();
 	}
 		if(keyID === 84)
 		{
 		drawTelefoon();
+		hand.draw();
 			   e.preventDefault();
 		}
-	
 	
 
  
@@ -811,27 +1052,33 @@ function checkKeyUp(e){
 	var keyID =  e.keyCode || e.which;
 	if (keyID === 38 || keyID ===87) { //38 betekent pijl omhoog,87 betekent w toets
 		avatar1.isUpKey=false;
+		hand.isUpKey=false;
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
 	}
 	if (keyID === 39 || keyID ===68) { 
 		achtergrond1.isRightKey=false;
+		hand.isRightKey = false;
 		e.preventDefault();
 	}
 	if (keyID === 40 || keyID ===83) { 
 		avatar1.isDownKey=false;
+		hand.isDownKey = false;
 		e.preventDefault();
 	}
-	if (keyID === 37 || keyID ===65) { 
+	if (keyID === 37 || keyID ===65) { //linker pijl
 		achtergrond1.isLeftKey=false;
+		hand.isLeftKey = false;
 		e.preventDefault();
 		
 	}
 	if(keyID=== 27){
 		achtergrond1.isEscapeKey=false;
+	
 		e.preventDefault();
 	}
 	if(keyID === 32){
 		avatar1.isSpaceBarKey=false;
+			hand.isSpaceBarKey = false;
 		e.preventDefault();
 	}
 	if(keyID === 82){
@@ -878,7 +1125,7 @@ function checkKeyUp(e){
 		vraag5.isThreeKey = false;
 		e.preventDefault();
 	}
-		if(keyID === 122)
+		if(keyID === 122)//f11
 	{
 		e.preventDefault();
 	}
