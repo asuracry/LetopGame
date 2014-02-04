@@ -21,6 +21,7 @@ var drawInterval;
 var tekenVraag = 0;
 var vraag1Beantwoord = false;
 var vraag2Beantwoord = false;
+var score = 0;
 //var tekenVraag = false;
 
 
@@ -84,14 +85,7 @@ function clearCtxAvatar(){
 	ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
 }
 
-// function pauseGame(){
 
-// 	//c
-// 	//clearCtxBg();
-// 	imgSprite.clear();
-// 	console.log('Game gepauzeerd')
-
-// }
 
 // end of clear functies
 
@@ -190,17 +184,20 @@ this.checkKeys();
 Vraag.prototype.checkKeys= function(){
 if(vraag1.isOneKey === true)
 	{
+	score += 1;
+console.log('Score:' ,score);
 	clearCtxVraag();
 	tekenVraag = 0;
-		console.log('vraag koelkast');
 	}
 if(vraag1.isTwoKey === true)
 	{
+console.log('Score:' ,score);
 	clearCtxVraag();
 	tekenVraag = 0;
 	}
 if(vraag1.isThreeKey === true)
 	{
+	console.log('Score:' ,score);
 	clearCtxVraag();
 	tekenVraag = 0;
 	}
