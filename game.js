@@ -184,7 +184,7 @@ function draw() {
 	drawMenu();
 	//drawBot();
 	//text.draw();
-		//sound.play();
+	sound.play();
 	}
 	
 
@@ -212,7 +212,7 @@ function drawResultatenScherm(){
 	clearAll();
 	clearCtxMenu();
 	ctxResultatenScherm.drawImage(imgResultatenScherm,0,0,800,600,0,0,800,600);
-	resultaat.draw();
+	//resultaat.draw();
 	//console.log('Score:', score);
 }
 
@@ -359,7 +359,7 @@ function Resultaat(){
     this.drawX =  530;
     this.drawY = 200;
     this.width = 80;
-    this.height= 70;
+    this.height= 100;
 }
 
 function Hand(){
@@ -414,7 +414,7 @@ if(magHandTekenen = true)
 
 	ctxHand.drawImage(imgHand,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 	//avatar1.checkTekenenVanVraag();
-	console.log('hand tekenen');
+	//console.log('hand tekenen');
 }
 if(magHandTekenen = false)
 {
@@ -440,38 +440,69 @@ Resultaat.prototype.draw = function()
 	switch (score)
 		{
 			case 0:
-				console.log('Je Score is 0');
+				//console.log('Je Score is 0');
 				this.srcX=0;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 1:
-				console.log('Je Score is 1');
-				this.srcX = 75;
+				//console.log('Je Score is 1');
+				this.srcX = 80;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 2:
-				console.log('Je Score is 2');
-				this.srcX = 150;
+				//console.log('Je Score is 2');
+				this.srcX = 160;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 3:
-				console.log('Je Score is 3');
-				this.srcX = 225;
+				//console.log('Je Score is 3');
+				this.srcX = 240;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 4:
-				console.log('Je Score is 4');
-				this.srcX = 300;
+				//console.log('Je Score is 4');
+				this.srcX = 320;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 5:
-				console.log('Je Score is 5');
-				this.srcX = 375;
+				//console.log('Je Score is 5');
+				this.srcX = 400;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 6:
-				console.log('Je Score is 6');
-				this.srcX = 450;
+				//console.log('Je Score is 6');
+				this.srcX = 480;
+				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			case 7:
+				//console.log('Je Score is 6');
+				this.srcX = 560;
+				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+				
+			case 8:
+				//console.log('Je Score is 6');
+				this.srcX = 640;
+				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			case 9:
+				//console.log('Je Score is 6');
+				this.srcX = 720;
+				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			case 10:
+				//console.log('Je Score is 6');
+				this.srcX = 800;
+				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			case 11:
+				//console.log('Je Score is 6');
+				this.srcX = 880;
+				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			case 12:
+				//console.log('Je Score is 6');
+				this.srcX = 960;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 		}
@@ -485,42 +516,91 @@ Resultaat.prototype.draw = function()
 				break;
 			case 1:
 			
-				this.srcX = 75;
+				this.srcX = 80;
 				this.drawY = 320;
 					 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 2:
 				
-				this.srcX = 150;
+				this.srcX = 160;
 				this.drawY = 320;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 3:
 			
-				this.srcX = 225;
+				this.srcX = 240;
 				this.drawY = 320;
 					 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 4:
 		
-				this.srcX = 300;
+				this.srcX = 320;
 				this.drawY = 320;
 						 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 5:
 				
-				this.srcX = 375;
+				this.srcX = 400;
 				this.drawY = 320;
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			case 6:
 				 
-				this.srcX = 450;
+				this.srcX = 480;
+				this.drawY = 320;
+				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			
+
+			case 7:
+				 
+				this.srcX = 560;
+				this.drawY = 320;
+				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			
+				
+			case 8:
+				 
+				this.srcX = 640;
+				this.drawY = 320;
+				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			
+				
+			case 9:
+				 
+				this.srcX = 720;
+				this.drawY = 320;
+				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			
+				
+			case 10:
+				 
+				this.srcX = 800;
+				this.drawY = 320;
+				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			
+				
+			case 11:
+				 
+				this.srcX = 880;
+				this.drawY = 320;
+				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+				break;
+			
+				
+			case 12:
+				 
+				this.srcX = 940;
 				this.drawY = 320;
 				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 			
 				}
+			
 		
  //console.log('dat je het resultaat tekent');
 }
@@ -561,21 +641,23 @@ ctxChecklist.drawImage(imgChecklist,0,0,800,600,0,0,800,600);
 }
 
 Vraag.prototype.checkKeys= function(){
-if(vraag1.isThree === true)//begin van koeklast
+if(vraag1.isThreeKey === true)//begin van koeklast
 	{
 	score += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag1Beantwoord = true;
 	}
-if(vraag1.isOneKey === true || vraag1.isThreeKey === true)
+if(vraag1.isOneKey === true || vraag1.isTwoKey === true)
 	{
 	vragenFout +=1;
 	clearCtxVraag();
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag1Beantwoord = true;
 	}
 if(vraag2.isThreeKey === true || vraag2.isTwoKey === true)//begin tv
 	{
@@ -584,6 +666,7 @@ if(vraag2.isThreeKey === true || vraag2.isTwoKey === true)//begin tv
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag2Beantwoord = true;
 	}
 if(vraag2.isOneKey === true)//eind van tv
 	{
@@ -592,6 +675,7 @@ if(vraag2.isOneKey === true)//eind van tv
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag2Beantwoord = true;
 	}
 if(vraag3.isOneKey === true || vraag3.isThreeKey === true)//begin van poster
 	{
@@ -600,6 +684,7 @@ if(vraag3.isOneKey === true || vraag3.isThreeKey === true)//begin van poster
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag3Beantwoord = true;
 	}
 if(vraag3.isTwoKey === true)//einde van de poster
 	{
@@ -608,6 +693,7 @@ if(vraag3.isTwoKey === true)//einde van de poster
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag3Beantwoord = true;
 	}
 if(vraag4.isThreeKey === true)//begin van schilderij
 	{
@@ -616,6 +702,7 @@ if(vraag4.isThreeKey === true)//begin van schilderij
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag4Beantwoord = true;
 	}
 if(vraag4.isTwoKey === true || vraag4.isOneKey === true)
 	{
@@ -624,6 +711,7 @@ if(vraag4.isTwoKey === true || vraag4.isOneKey === true)
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag4Beantwoord = true;
 	}
 if(vraag5.isOneKey === true || vraag5.isTwoKey === true)//begin van game
 	{
@@ -632,6 +720,7 @@ if(vraag5.isOneKey === true || vraag5.isTwoKey === true)//begin van game
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag5Beantwoord = true;
 	}
 if(vraag5.isThreeKey === true)//eind van game
 	{
@@ -640,6 +729,7 @@ if(vraag5.isThreeKey === true)//eind van game
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag5Beantwoord = true;
 	}
 if(vraag6.isTwoKey === true || vraag6.isThreeKey === true)//begin van prullebak
 	{
@@ -648,6 +738,7 @@ if(vraag6.isTwoKey === true || vraag6.isThreeKey === true)//begin van prullebak
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag6Beantwoord = true;
 	}
 if(vraag6.isOneKey === true)//eind van prullebak
 	{
@@ -656,6 +747,7 @@ if(vraag6.isOneKey === true)//eind van prullebak
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag6Beantwoord = true;
 	}
 if(vraag7.isOneKey === true || vraag7.isThreeKey === true)//begin van agenda
 	{
@@ -664,6 +756,7 @@ if(vraag7.isOneKey === true || vraag7.isThreeKey === true)//begin van agenda
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag7Beantwoord = true;
 	}
 if(vraag7.isTwoKey === true)//eind van agenda
 	{
@@ -672,15 +765,17 @@ if(vraag7.isTwoKey === true)//eind van agenda
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag7Beantwoord = true;
 	}
 	
-if(vraag8.isOneKey === true || vraag8.isThreeKey === true)//begin van game
+if(vraag8.isOneKey === true)//begin van game
 	{
 	vragenFout += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag8Beantwoord = true;
 	}
 if(vraag8.isTwoKey === true)//eind van game
 	{
@@ -689,6 +784,7 @@ if(vraag8.isTwoKey === true)//eind van game
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag8Beantwoord = true;
 	}
 if(vraag9.isOneKey === true || vraag9.isTwoKey === true)//begin van hond & bed
 	{
@@ -697,6 +793,7 @@ if(vraag9.isOneKey === true || vraag9.isTwoKey === true)//begin van hond & bed
 	tekenVraag = 0;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag9Beantwoord = true;
 	}
 if(vraag9.isThreeKey === true)//eind van hond & bed
 	{
@@ -705,6 +802,7 @@ if(vraag9.isThreeKey === true)//eind van hond & bed
 	score += 1;
 	console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag9Beantwoord = true;
 	}
 
 
@@ -716,6 +814,7 @@ if(vraag10.isTwoKey === true)
 		score += 1;
 		console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag10Beantwoord = true;
 		
 	}
 if(vraag10.isOneKey === true || vraag10.isThreeKey == true)
@@ -725,6 +824,7 @@ if(vraag10.isOneKey === true || vraag10.isThreeKey == true)
 		tekenVraag = 0;
 		console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag10Beantwoord = true;
 	}
 if(vraag11.isThreeKey === true)
 	{	
@@ -733,6 +833,7 @@ if(vraag11.isThreeKey === true)
 		score += 1;
 		console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag11Beantwoord = true;
 		
 	}
 if(vraag11.isOneKey === true || vraag11.isTwoKey == true)
@@ -742,6 +843,7 @@ if(vraag11.isOneKey === true || vraag11.isTwoKey == true)
 		tekenVraag = 0;
 		console.log('score:', score);
 	console.log('fout:', vragenFout);
+	vraag11Beantwoord = true;
 	}
 if(vraag12.isOneKey === true)
 	{	
@@ -749,6 +851,7 @@ if(vraag12.isOneKey === true)
 		tekenVraag =0;
 		score += 1;
 		console.log('score:', score);
+		vraag12Beantwoord = true;
 	console.log('fout:', vragenFout);
 		
 	}
@@ -758,6 +861,7 @@ if(vraag12.isTwoKey === true || vraag12.isThreeKey == true)
 		clearCtxVraag();
 		tekenVraag = 0;
 		console.log('score:', score);
+		vraag12Beantwoord = true;
 	console.log('fout:', vragenFout);
 	}
 	
@@ -835,33 +939,33 @@ Hand.prototype.checkKeys = function(){
 	if(this.isSpaceBarKey === true && this.drawX >= 270 && this.drawX <= 310 && this.drawY >= 170 && this.drawY <= 190 && vraag10Beantwoord === false  && checklistGetekend === false)// berekening voor de knop van de eerste telefoon vraag
 	{
 		tekenVraag = 10;
-		vraag10Beantwoord = true;
+		//vraag10Beantwoord = true;
 
 
 	}
 		if(this.isSpaceBarKey === true && this.drawX >= 370 && this.drawX <= 410 && this.drawY >= 170 && this.drawY <= 190 && vraag11Beantwoord === false && checklistGetekend === false)// berekening voor de knop van de tweede telefoon vraag
 		{
 			tekenVraag = 11;
-			vraag11Beantwoord = true;
+			//vraag11Beantwoord = true;
 		
 			//console.log('telefoon vraag 2');
 		}
 	if(this.isSpaceBarKey === true && this.drawX >= 490 && this.drawX <=530 && this.drawY >= 170 && this.drawY <= 190 && vraag12Beantwoord === false && checklistGetekend === false)//berekening voor de knop van de derde telefoon vraag
 		{
 			tekenVraag = 12;
-			vraag12Beantwoord = true;
+			
 		}
 	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 230 && this.drawY <= 290 && checklistGetekend === false)// berekening voor de knop van de checklist
 	{
 	
 		checklist.draw();
 		checklistGetekend = true;
-		console.log(checklistGetekend);
+		//console.log(checklistGetekend);
 	}
 	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 330 && this.drawY <= 390 && checklistGetekend === false)//berekening voor de knop van het sluiten
 	{
 		telefoonSluiten();
-		console.log('sluiten');
+		//console.log('sluiten');
 		
 	}
 	if(this.isSpaceBarKey === true && this.drawX >=430 && this.drawX <= 530  && this.drawY === 90 )//berkening voor de home knop
@@ -891,52 +995,53 @@ Avatar.prototype.checkKeys = function(){
 	{
 		vraag1.srcX = 0;
 		tekenVraag = 1;
-		vraag1Beantwoord = true;
+		//vraag1Beantwoord = true;
 	}
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -96 && achtergrond1.drawX >= -348 && vraag2Beantwoord === false )//berekening voor de computer vraag
 	{
 		
 		tekenVraag = 2;
-		vraag2Beantwoord = true;
+		//vraag2Beantwoord = true;
 	}
 		if(this.isSpaceBarKey && achtergrond1.drawX <= -1124 && achtergrond1.drawX >= -1328 && this.drawY <= 77 &&  vraag3Beantwoord === false)//berekening voor de bank vraag
 	{
 		tekenVraag = 3;
-		vraag3Beantwoord = true;
+		//vraag3Beantwoord = true;
 	}
 		if(this.isSpaceBarKey && achtergrond1.drawX <=-3124 && achtergrond1.drawX >= -3204 && vraag4Beantwoord === false)//berekening voor de giraffe vraag
 	{
 		tekenVraag = 4;
-		vraag4Beantwoord = true;
+		//vraag4Beantwoord = true;
 	}
 		
 		if(this.isSpaceBarKey && achtergrond1.drawX <= -2076 && achtergrond1.drawX >= -2444 && this.drawY === 50 && vraag5Beantwoord === false)//berekening voor het familie portret
 	{
 		tekenVraag = 5;
-		vraag5Beantwoord = true;
+		//vraag5Beantwoord = true;
 	}
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -1460 && achtergrond1.drawX >= -1492 && this.drawY === 50 && vraag6Beantwoord === false)//berekening voor de prullebak
 	{
 		tekenVraag = 6;
-		vraag6Beantwoord = true;
+		//vraag6Beantwoord = true;
 	}
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -1868 && achtergrond1.drawX >= -1892 && this.drawY === 50 && vraag7Beantwoord === false)//berekening voor de agenda
 	{
 		tekenVraag = 7;
-		vraag7Beantwoord = true;
+		//vraag7Beantwoord = true;
 	}
 	if(this.isSpaceBarKey && achtergrond1.drawX <=-3020 && achtergrond1.drawX >= -3092 && vraag8Beantwoord === false)//berekening voor de beer vraag
 	{
 		tekenVraag = 8;
-		vraag8Beantwoord = true;
+		//vraag8Beantwoord = true;
 	}
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -3496 && achtergrond1.drawX >= -3648 && this.drawY === 50 && vraag9Beantwoord === false)// berekening voor de hond
 		{
 		tekenVraag = 9;
-		vraag9Beantwoord = true;
+		//vraag9Beantwoord = true;
 		}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -988 && achtergrond1.drawX >= -1036 && this.drawY === 50 )// berekening voor de telefoon
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -2672 && achtergrond1.drawX >= -2764 && this.drawY === 50 )// berekening voor de telefoon
 		{
+
 			drawTelefoon();
 		}
 
@@ -944,6 +1049,11 @@ Avatar.prototype.checkKeys = function(){
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -1900  && achtergrond1.drawX >=-2012 && vraag1Beantwoord === true && vraag2Beantwoord === true && 
 	vraag3Beantwoord === true && vraag4Beantwoord === true && vraag5Beantwoord === true && this.drawY === 110)
 	{
+		drawResultatenScherm();
+	}
+	if(vraag1Beantwoord && vraag2Beantwoord && vraag3Beantwoord && vraag4Beantwoord && vraag5Beantwoord && vraag6Beantwoord && vraag7Beantwoord && vraag8Beantwoord && vraag9Beantwoord && vraag10Beantwoord && vraag11Beantwoord && vraag12Beantwoord)
+	{
+		console.log('klaar');
 		drawResultatenScherm();
 	}
 
@@ -1092,7 +1202,7 @@ function checkKeyDown(e){
 		avatar1.isUpKey=true;
 			telefoonIsGetekend = 0;
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
-		console.log('avatar omhoog');
+		//console.log('avatar omhoog');
 		}
 	}
 	if (keyID === 39 || keyID ===68) //rechter pijl of d key
@@ -1110,7 +1220,7 @@ function checkKeyDown(e){
 			}
 		else
 			{
-				console.log('poppetje naar rechts');
+				//console.log('poppetje naar rechts');
 				achtergrond1.isRightKey=true;
 				telefoonIsGetekend = 0;
 				e.preventDefault();
