@@ -58,11 +58,23 @@ function drawMenu() {
 // start of clear funties
 
 function clearCtxBg() {
+	stopDrawing();
     ctxBg.clearRect(0,0,gameWidth,gameHeight);
+    achter1.clearRect(0,0,gameWidth,gameHeight);//erbij
+    achtergrond1.clearRect(0,0,gameWidth,gameHeight);//erbij
 }
 
 function clearCtxAvatar(){
 	ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
+}
+
+function pauseGame(){
+
+	//c
+	//clearCtxBg();
+	imgSprite.clear();
+	console.log('Game gepauzeerd')
+
 }
 
 // end of clear functies
@@ -85,11 +97,13 @@ this.isDownKey = false;
 this.isLeftKey = false;
 this.isEscapeKey=false;
 this.isSpaceBarKey=false;
+this.isRkey=false;
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
 this.laden = false;
+
 
 }
 
@@ -106,6 +120,8 @@ function Achtergrond(){
 	this.isDownKey = false;
 	this.isLeftKey = false;
 	this.isEscapeKey=false;
+	this.isRkey=false;
+	this.isEkey=false;
 	this.leftX = this.drawX;
 	this.rightX = this.drawX + this.width;
 	this.topY = this.drawY;
@@ -147,10 +163,10 @@ function resetGame(){
 }
 
 Achtergrond.prototype.checkKeys = function() {
-	if(this.isRightKey) {
+	if(this.isRightKey && this.drawX >= -2115) {
 		this.drawX -= this.speed;
 	}
-	if(this.isLeftKey)
+	if(this.isLeftKey &&  this.drawX <= 219)
 	{
 		this.drawX += this.speed;
 	}	
@@ -158,8 +174,16 @@ Achtergrond.prototype.checkKeys = function() {
 	{
 		resetGame();
 	}
+	if(this.isEkey)
+	{
+		console.log('X:', this.drawX);
+		
+	}
+
 	
 }
+
+
 
 Avatar.prototype.checkKeys = function(){
 	if(this.isUpKey &&this.topY > 110){
@@ -168,20 +192,17 @@ Avatar.prototype.checkKeys = function(){
 	if(this.isDownKey && this.bottomY < 490){
 		this.drawY += this.speed;
 	}
-	if(this.isSpaceBarKey && this.topY === 110)
+	if(this.isSpaceBarKey && this.topY === 110 && achtergrond1.drawX <= 135 && achtergrond1.drawX >= 27)
 	{
-		//console.log('event bereik');
-		avatar1.laden = true;
-		avatar1.eventLaden();
+		console.log('koelkast event');
+		pauseGame();
+	}
+	if(this.isRkey){
+		console.log('Y:' , this.drawY);
+		//console.log(this.drawX);
 	}
 }
-Avatar.prototype.eventLaden = function(){
-	if(avatar1.laden = true){
-		console.log('event kan beginnen');
-		avatar1.laden=false;
-	}
 
-}
 
 function clearCtxAvatar() {
     ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
@@ -223,8 +244,9 @@ Button.prototype.checkClicked = function(){
 function mouseClicked(e){
 	mouseX = e.pageX = canvasBg.offsetLeft;
 	mouseY = e.pageY = canvasBg.offsetTop;
-	if(btnPlay.checkClicked()) playGame();
+	if(btnPlay.checkClicked())playGame();
 }
+
 
 function checkKeyDown(e){
 	var keyID = e.keyCode || e.which;
@@ -251,9 +273,16 @@ function checkKeyDown(e){
 	if(keyID === 32){
 		avatar1.isSpaceBarKey=true;
 		e.preventDefault();
-		console.log('spatiebalk ingedrukt');
 	}
-	
+	if(keyID === 82){
+		avatar1.isRkey = true;
+		e.preventDefault();
+	}
+	if(keyID === 69)
+	{
+		achtergrond1.isEkey=true;
+		e.preventDefault();
+	}
 	
 
  
@@ -285,7 +314,15 @@ function checkKeyUp(e){
 	if(keyID === 32){
 		avatar1.isSpaceBarKey=false;
 		e.preventDefault();
-		console.log('spatiebalk losgelaten');
+	}
+	if(keyID === 82){
+		avatar1.isRkey = false;
+		e.preventDefault();
+	}
+	if(keyID === 69)
+	{
+		achtergrond1.isEkey=false;
+		e.preventDefault();
 	}
 
  
