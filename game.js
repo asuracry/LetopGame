@@ -33,7 +33,7 @@ var ctxTelefoon = canvasTelefoon.getContext('2d');
 
   
 
-
+var helpIsDrawn = false;
 
 var vraag1;
 var vraag2;
@@ -41,7 +41,7 @@ var vraag3;
 var vraag4;
 
 var magHelpTekenen = 1;
-
+var remove = 0;
 var vragenFout= 0;
 
 var checklist = 0;
@@ -75,7 +75,7 @@ var imgVraag = new Image();
 imgVraag.src = 'vragensprite.png';
 
 var imgSprite = new Image();
-imgSprite.src = 'sprite4.png';
+imgSprite.src = 'spritedefinitief.png';
 imgSprite.addEventListener('load',init,false);
 
 var imgStartMenu = new Image();
@@ -95,6 +95,9 @@ imgChecklist.src = 'checklist.png';
 
 var imgTelefoon = new Image();
 imgTelefoon.src = 'telefoon.png';
+
+var imgHelpMenu = new Image();
+imgHelpMenu.src = 'helpmenu.png';
 
 var sound = new Audio('music.mp3');
 sound.play();
@@ -284,22 +287,26 @@ function Resultaat(){
     this.height= 70;
 }
 
+function  removeEventListener()
+	{
+		document.removeEventListener('keydown',checkKeyDown,false);
+		document.removeEventListener('keyup',checkKeyUp,false);
+
+	}	
+
 function drawHelpMenu() {
 	if(magHelpTekenen === 1)
 	{
-	ctxHelp.drawImage(imgMenu,0,0,800,600,0,0,800,600);
+	ctxHelp.drawImage(imgHelpMenu,0,0,800,600,0,0,800,600);
+	helpIsDrawn = true;
 	}
-	//if(magHelpTekenen === 0)
-	//{
-	//ctxHelp.clearRect(0,0,800,600);
-	//}
-
 }
 
-function drawHelp()
-{
-	ctxHelp.drawImage(imgHelp,0,0,800,600,0,0,800,600);
+function drawNextPage(){
+	ctxHelp.clearRect(0,0,gameWidth,gameHeight);
+	ctxHelp.drawImage(imgHelpMenu,800,0,800,600,0,0,800,600);
 }
+
 Afvinken.prototype.draw = function(){
 	ctxAfvinken.drawImage(imgAfvinken,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 }
@@ -505,7 +512,7 @@ function resetGame(){
 }
 
 Achtergrond.prototype.checkKeys = function() {
-	if(this.isRightKey && this.drawX >= -3584) {
+	if(this.isRightKey && this.drawX >= -3656) {
 		this.drawX -= this.speed;
 	}
 	if(this.isLeftKey &&  this.drawX <= -8)
@@ -527,35 +534,35 @@ Achtergrond.prototype.checkKeys = function() {
 
 
 Avatar.prototype.checkKeys = function(){
-	if(this.isUpKey &&this.topY > 110){
+	if(this.isUpKey &&this.topY > 50){
 		this.drawY -= this.speed;
 	}
 	if(this.isDownKey && this.bottomY < 490){
 		this.drawY += this.speed;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -620 && achtergrond1.drawX >= -732 && vraag1Beantwoord === false)//berekening voor de koelkast vraag
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -544 && achtergrond1.drawX >= -632 && vraag1Beantwoord === false)//berekening voor de koelkast vraag
 	{
 		vraag1.srcX = 0;
 		tekenVraag = 1;
 		vraag1Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -248 && achtergrond1.drawX >= -308 && vraag2Beantwoord === false)//berekening voor de tv vraag
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -96 && achtergrond1.drawX >= -348 && vraag2Beantwoord === false)//berekening voor de computer vraag
 	{
 		
 		tekenVraag = 2;
 		vraag2Beantwoord = true;
 	}
-		if(this.isSpaceBarKey && achtergrond1.drawX <= -1000 && achtergrond1.drawX >= -1180 && vraag3Beantwoord === false)//berekening voor de tv vraag
+		if(this.isSpaceBarKey && achtergrond1.drawX <= -1124 && achtergrond1.drawX >= -1328 && this.drawY <= 77 &&  vraag3Beantwoord === false)//berekening voor de bank vraag
 	{
 		tekenVraag = 3;
 		vraag3Beantwoord = true;
 	}
-		if(this.isSpaceBarKey && achtergrond1.drawX <= -2480 && achtergrond1.drawX >= -2828 && vraag4Beantwoord === false)//berekening voor de tv vraag
+		if(this.isSpaceBarKey && achtergrond1.drawX <=-3124 && achtergrond1.drawX >= -3204 && vraag4Beantwoord === false)//berekening voor de knuffel vraag
 	{
 		tekenVraag = 4;
 		vraag4Beantwoord = true;
 	}
-		if(this.isSpaceBarKey && achtergrond1.drawX <= -2236 && achtergrond1.drawX >= -2336 && this.drawY === 302 && vraag5Beantwoord === false)//berekening voor de tv vraag
+		if(this.isSpaceBarKey && achtergrond1.drawX <= -2076 && achtergrond1.drawX >= -2444 && this.drawY === 50 && vraag5Beantwoord === false)//berekening voor het familie portret
 	{
 		tekenVraag = 5;
 		vraag5Beantwoord = true;
@@ -599,7 +606,7 @@ Avatar.prototype.checkTekenenVanVraag = function(){
 	case 4:
 	
 		clearCtxMenu();
-		vraag4.srcX = 6400;
+		vraag4.srcX = 4800;
 		vraag4.draw();
 		break;
 	case 5:
@@ -662,9 +669,19 @@ function checkKeyDown(e){
 		avatar1.isUpKey=true;
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
 	}
-	if (keyID === 39 || keyID ===68) { 
-		achtergrond1.isRightKey=true;
-		e.preventDefault();
+	if (keyID === 39 || keyID ===68) //rechter pijl of d key
+	{ 
+		if(helpIsDrawn === true)
+			{
+			//console.log('volgende pagina');
+			drawNextPage();
+			}
+		else
+			{
+				console.log('poppetje naar rechts');
+				achtergrond1.isRightKey=true;
+				e.preventDefault();
+			}
 	}
 	if (keyID === 40 || keyID ===83) { 
 		avatar1.isDownKey=true;
@@ -770,7 +787,6 @@ function checkKeyDown(e){
 			case(0):
 			ctxHelp.clearRect(0,0,800,600);
 			magHelpTekenen = 1;
-			console.log('deze functie doet het');
 			break;
 			
 			case(1):
@@ -834,7 +850,7 @@ function checkKeyUp(e){
 		//tekenVraag = 0;
 		e.preventDefault();
 	}
-	if(keyID === 49 || keyID === 97)
+	if(keyID === 49 || keyID === 97)// 1 en num 1
 	{
 		vraag1.isOneKey = false;
 		vraag2.isOneKey = false;
@@ -842,6 +858,7 @@ function checkKeyUp(e){
 		vraag4.isOneKey = false;
 		vraag5.isOneKey = false;
 		e.preventDefault();
+		
 	}
 	if(keyID === 50 || keyID === 98)
 	{
