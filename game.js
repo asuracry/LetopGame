@@ -1,9 +1,13 @@
 var canvasBg = document.getElementById('canvasBg');
 var ctxBg = canvasBg.getContext('2d');
+
 var canvasAvatar = document.getElementById('canvasAvatar');
 var ctxAvatar = canvasAvatar.getContext('2d');
 
+var canvasVraag = document.getElementById('canvasVraag');
+var ctxVraag = canvasVraag.getContext('2d');
 
+var vraag1;
 var avatar1;
 var achtergrond1;
 var btnPlay = new Button(0,0,0,0);
@@ -13,9 +17,12 @@ var mouseX;
 var mouseY;
 var fps = 10;
 var drawInterval;
+var tekenVraag = 0;
+//var tekenVraag = false;
 
 
-
+var imgVraag = new Image();
+imgVraag.src = 'voorbeeldvraag.png';
 
 var imgSprite = new Image();
 imgSprite.src = 'sprite4.png';
@@ -35,6 +42,7 @@ function init() {
 function playGame(){
     startDrawing();
 	avatar1 = new Avatar();
+	vraag1= new Vraag();
 	achtergrond1 = new Achtergrond();
 	document.addEventListener('keydown',checkKeyDown,false);
 	document.addEventListener('keyup',checkKeyUp,false);
@@ -45,7 +53,6 @@ function draw() {
 
 	achtergrond1.draw();
 	avatar1.draw();
-	
 	
 }
 
@@ -61,9 +68,7 @@ function drawMenu() {
     ctxBg.drawImage(imgMenu,0,0,800,600,0,0,800,600);
 }
 
-function drawVoorbeeldVraag(){
-	ctxBg.drawImage(imgVoorbeeldVraag,0,0,800,600,0,0,800,600);
-}
+
 // start of clear funties
 
 function clearCtxBg() {
@@ -115,6 +120,18 @@ this.laden = false;
 
 }
 
+function Vraag(){
+	this.srcX = 0;
+	this.srcY = 0;
+    this.drawX = 0;
+    this.drawY = 0;
+    this.width = 800;
+    this.height= 600;
+	this.isQKey = false;
+
+}
+
+
 function Achtergrond(){
     this.srcX = 0;
     this.srcY = 0;
@@ -152,6 +169,21 @@ this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
+}
+
+Vraag.prototype.draw = function(){
+clearCtxAvatar();
+clearCtxBg();
+ctxVraag.drawImage(imgVraag,0,0,800,600,0,0,800,600);
+this.checkKeys();
+}
+
+Vraag.prototype.checkKeys= function(){
+console.log('draw');
+if(vraag1.isQKey === true)
+	{
+		console.log('q key ingedrukt');
+	}
 }
 
 Avatar.prototype.updateCoors = function(){
@@ -202,11 +234,16 @@ Avatar.prototype.checkKeys = function(){
 	}
 	if(this.isSpaceBarKey)
 	{
-		console.log('spatiebalk!');
+		//stopDrawing();
+		tekenVraag = 1;
 	}
 	if(this.isRkey){
 		console.log('Y:' , this.drawY);
 		//console.log(this.drawX);
+	}
+	if(tekenVraag === 1)
+	{
+		vraag1.draw();
 	}
 }
 
@@ -283,6 +320,11 @@ function checkKeyDown(e){
 		achtergrond1.isEkey=true;
 		e.preventDefault();
 	}
+	if(keyID === 81)
+	{
+		vraag1.isQKey = true;
+		e.preventDefault();
+	}
 	
 
  
@@ -322,6 +364,12 @@ function checkKeyUp(e){
 	if(keyID === 69)
 	{
 		achtergrond1.isEkey=false;
+		e.preventDefault();
+	}
+	
+	if(keyID === 81)
+	{
+		vraag1.isQKey = false;
 		e.preventDefault();
 	}
 
