@@ -1,0 +1,16 @@
+body {
+    background:#000000;
+}
+
+
+#canvasBg {
+    display:block;
+    background:#ffffff;
+    margin:100px auto 0px;
+}
+
+#canvasAvatar {
+    display:block;
+    margin:-500px auto 0px;
+}
+
