@@ -15,6 +15,7 @@ var fps = 10;
 var drawInterval;
 
 
+
 var imgSprite = new Image();
 imgSprite.src = 'sprite3.png';
 imgSprite.addEventListener('load',init,false);
@@ -83,10 +84,12 @@ this.isRightKey = false;
 this.isDownKey = false;
 this.isLeftKey = false;
 this.isEscapeKey=false;
+this.isSpaceBarKey=false;
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
+this.laden = false;
 
 }
 
@@ -165,6 +168,19 @@ Avatar.prototype.checkKeys = function(){
 	if(this.isDownKey && this.bottomY < 490){
 		this.drawY += this.speed;
 	}
+	if(this.isSpaceBarKey && this.topY === 110)
+	{
+		//console.log('event bereik');
+		avatar1.laden = true;
+		avatar1.eventLaden();
+	}
+}
+Avatar.prototype.eventLaden = function(){
+	if(avatar1.laden = true){
+		console.log('event kan beginnen');
+		avatar1.laden=false;
+	}
+
 }
 
 function clearCtxAvatar() {
@@ -232,6 +248,11 @@ function checkKeyDown(e){
 		achtergrond1.isEscapeKey=true;
 		e.preventDefault();
 	}
+	if(keyID === 32){
+		avatar1.isSpaceBarKey=true;
+		e.preventDefault();
+		console.log('spatiebalk ingedrukt');
+	}
 	
 	
 
@@ -260,6 +281,11 @@ function checkKeyUp(e){
 	if(keyID=== 27){
 		achtergrond1.isEscapeKey=false;
 		e.preventDefault();
+	}
+	if(keyID === 32){
+		avatar1.isSpaceBarKey=false;
+		e.preventDefault();
+		console.log('spatiebalk losgelaten');
 	}
 
  
