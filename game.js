@@ -8,6 +8,7 @@ var canvasVraag = document.getElementById('canvasVraag');
 var ctxVraag = canvasVraag.getContext('2d');
 
 var vraag1;
+var vraag2;
 var avatar1;
 var achtergrond1;
 var btnPlay = new Button(0,0,0,0);
@@ -18,11 +19,13 @@ var mouseY;
 var fps = 10;
 var drawInterval;
 var tekenVraag = 0;
+var vraag1Beantwoord = false;
+var vraag2Beantwoord = false;
 //var tekenVraag = false;
 
 
 var imgVraag = new Image();
-imgVraag.src = 'voorbeeldvraag.png';
+imgVraag.src = 'vragensprite.png';
 
 var imgSprite = new Image();
 imgSprite.src = 'sprite4.png';
@@ -43,6 +46,7 @@ function playGame(){
     startDrawing();
 	avatar1 = new Avatar();
 	vraag1= new Vraag();
+	vraag2 = new Vraag();
 	achtergrond1 = new Achtergrond();
 	document.addEventListener('keydown',checkKeyDown,false);
 	document.addEventListener('keyup',checkKeyUp,false);
@@ -98,7 +102,7 @@ function clearCtxAvatar(){
 function Avatar(){
 this.srcX=0;//begintpunt van x
 this.srcY=600;//begintpunt van y
-this.drawX=220;//x punt waar het getekent wordt op het canvas
+this.drawX=300;//x punt waar het getekent wordt op het canvas
 this.drawY=200;//y punt waar het getekent wordt op het canvas
 this.width=100;//breedte van de char
 this.height=190;//hoogte van de char
@@ -121,13 +125,15 @@ this.laden = false;
 }
 
 function Vraag(){
-	this.srcX = 0;
+	this.srcX;
 	this.srcY = 0;
     this.drawX = 0;
     this.drawY = 0;
     this.width = 800;
     this.height= 600;
-	this.isQKey = false;
+	this.isOneKey = false;
+	this.isTwoKey = false;
+	this.isThreeKey =false;
 
 }
 
@@ -137,7 +143,7 @@ function Achtergrond(){
     this.srcY = 0;
     this.drawX = 0;
     this.drawY = 0;
-    this.width = 2949;
+    this.width = 3500;
     this.height= 600;
     this.speed = 4;
     this.isUpKey = false;
@@ -151,6 +157,9 @@ function Achtergrond(){
 	this.rightX = this.drawX + this.width;
 	this.topY = this.drawY;
 	this.bottomY = this.drawY + this.height;
+	this.antwoordA = false;// variabelen voor het geven van een antwoord
+	this.antwoordB = false;// variabelen voor het geven van een antwoord
+	this.antwoordC = false;// variabelen voor het geven van een antwoord
     
 }
 
@@ -172,18 +181,30 @@ this.bottomY = this.drawY + this.height;
 }
 
 Vraag.prototype.draw = function(){
-clearCtxAvatar();
-clearCtxBg();
-ctxVraag.drawImage(imgVraag,0,0,800,600,0,0,800,600);
+//clearCtxAvatar();
+//clearCtxBg();
+ctxVraag.drawImage(imgVraag,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 this.checkKeys();
 }
 
 Vraag.prototype.checkKeys= function(){
-console.log('draw');
-if(vraag1.isQKey === true)
+if(vraag1.isOneKey === true)
 	{
-		console.log('q key ingedrukt');
+	clearCtxVraag();
+	tekenVraag = 0;
 	}
+if(vraag1.isTwoKey === true)
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('twee ingedrukt');
+	}
+if(vraag1.isThreeKey === true)
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	}
+
 }
 
 Avatar.prototype.updateCoors = function(){
@@ -203,10 +224,10 @@ function resetGame(){
 }
 
 Achtergrond.prototype.checkKeys = function() {
-	if(this.isRightKey && this.drawX >= -2115) {
+	if(this.isRightKey && this.drawX >= -2576 ) {
 		this.drawX -= this.speed;
 	}
-	if(this.isLeftKey &&  this.drawX <= -3)
+	if(this.isLeftKey &&  this.drawX <= -8)
 	{
 		this.drawX += this.speed;
 	}	
@@ -232,10 +253,17 @@ Avatar.prototype.checkKeys = function(){
 	if(this.isDownKey && this.bottomY < 490){
 		this.drawY += this.speed;
 	}
-	if(this.isSpaceBarKey)
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -620 && achtergrond1.drawX >= -732 && vraag1Beantwoord === false)//berekening voor de koelkast vraag
 	{
-		//stopDrawing();
+		vraag1.srcX = 0;
 		tekenVraag = 1;
+		vraag1Beantwoord = true;
+	}
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -248 && achtergrond1.drawX >= -308 && vraag2Beantwoord === false)//berekening voor de tv vraag
+	{
+		vraag2.srcX = 800;
+		tekenVraag = 2;
+		vraag2Beantwoord = true;
 	}
 	if(this.isRkey){
 		console.log('Y:' , this.drawY);
@@ -244,6 +272,10 @@ Avatar.prototype.checkKeys = function(){
 	if(tekenVraag === 1)
 	{
 		vraag1.draw();
+	}
+	if(tekenVraag ===2)
+	{
+		vraag2.draw();
 	}
 }
 
@@ -255,6 +287,10 @@ function clearCtxAvatar() {
 
 function clearCtxBg(){
 	ctxBg.clearRect(0,0,gameWidth,gameHeight);
+}
+
+function clearCtxVraag(){
+	ctxVraag.clearRect(0,0,gameWidth,gameHeight);
 }
 //end of avatar functions
 
@@ -323,6 +359,24 @@ function checkKeyDown(e){
 	if(keyID === 81)
 	{
 		vraag1.isQKey = true;
+		
+		e.preventDefault();
+	}
+	if(keyID === 49)
+	{
+		vraag1.isOneKey = true;
+		e.preventDefault();
+
+	}
+	if(keyID === 50)
+	{
+		vraag1.isTwoKey = true;
+		vraag2.isTwoKey = false;
+		e.preventDefault();
+	}
+	if(keyID === 51)
+	{
+		vraag1.isThreeKey = true;
 		e.preventDefault();
 	}
 	
@@ -370,6 +424,21 @@ function checkKeyUp(e){
 	if(keyID === 81)
 	{
 		vraag1.isQKey = false;
+		//tekenVraag = 0;
+		e.preventDefault();
+	}
+	if(keyID === 49)
+	{
+		vraag1.isOneKey = false;
+		e.preventDefault();
+	}if(keyID === 50)
+	{
+		vraag1.isTwoKey = false;
+		e.preventDefault();
+	}
+	if(keyID === 51)
+	{
+		vraag1.isThreeKey = false;
 		e.preventDefault();
 	}
 
