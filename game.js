@@ -7,6 +7,12 @@ var ctxAvatar = canvasAvatar.getContext('2d');
 var canvasVraag = document.getElementById('canvasVraag');
 var ctxVraag = canvasVraag.getContext('2d');
 
+var canvasResultatenScherm = document.getElementById('canvasResultatenScherm');
+var ctxResultatenScherm = canvasResultatenScherm.getContext('2d');
+
+var canvasResultaat = document.getElementById('canvasResultaat');
+var ctxResultaat = canvasResultaat.getContext('2d');
+
 var vraag1;
 var vraag2;
 var avatar1;
@@ -22,7 +28,6 @@ var tekenVraag = 0;
 var vraag1Beantwoord = false;
 var vraag2Beantwoord = false;
 var score = 0;
-//var tekenVraag = false;
 
 
 var imgVraag = new Image();
@@ -34,6 +39,13 @@ imgSprite.addEventListener('load',init,false);
 
 var imgMenu = new Image();
 imgMenu.src = 'menu.png';
+
+var imgResultatenScherm = new Image();
+imgResultatenScherm.src = 'resultatenscherm.png';
+
+var imgResultaat = new Image();
+imgResultaat.src = 'cijfer.png';
+
 
 //main functions
 function init() {
@@ -71,6 +83,10 @@ function stopDrawing() {
 }
 function drawMenu() {
     ctxBg.drawImage(imgMenu,0,0,800,600,0,0,800,600);
+}
+
+function drawResultatenScherm(){
+	ctxResultatenScherm.drawImage(imgResultatenScherm,0,0,800,600,0,0,800,600);
 }
 
 
@@ -254,7 +270,6 @@ Achtergrond.prototype.checkKeys = function() {
 		console.log('X:', this.drawX);
 		
 	}
-
 	
 }
 
@@ -279,6 +294,12 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 2;
 		vraag2Beantwoord = true;
 	}
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -1900  && achtergrond1.drawX >=-2012 && vraag1Beantwoord === true && vraag2Beantwoord === true && this.drawY === 110)
+	{
+		console.log('alle vragen zijn beantwoord');
+		drawResultatenScherm();
+	}
+
 	if(this.isRkey){
 		console.log('Y:' , this.drawY);
 		//console.log(this.drawX);
