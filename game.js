@@ -5,6 +5,7 @@ var ctxAvatar = canvasAvatar.getContext('2d');
 
 
 var avatar1;
+var achtergrond1;
 var btnPlay = new Button(0,0,0,0);
 var gameWidth = canvasBg.width;
 var gameHeight = canvasBg.height;
@@ -28,9 +29,10 @@ function init() {
 
 // functie van het opstarten en spelen van de game
 function playGame(){
-	drawBg();
+	//drawBg(); wordt eruit gelaten aangezien de achtergrond een object wordt!
     startDrawing();
 	avatar1 = new Avatar();
+	achtgerond1 = new Achtergrond();
 	document.addEventListener('keydown',checkKeyDown,false);
 	document.addEventListener('keyup',checkKeyUp,false);
 	document.removeEventListener('click',mouseClicked,false);// zorgt ervoor dat de game niet opnieuw kan worden
@@ -52,13 +54,7 @@ function drawMenu() {
     ctxBg.drawImage(imgSprite,0,786,800,600,0,0,800,600);
 }
 
-function drawBg() {
-    var srcX = 0;
-    var srcY = 0;
-    var drawX = 0;
-    var drawY = 0;
-    ctxBg.drawImage(imgSprite,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
-}
+
 
 function clearCtxBg() {
     ctxBg.clearRect(0,0,gameWidth,gameHeight);
@@ -85,6 +81,14 @@ this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
 
+}
+
+function Achtergrond(){
+   var srcX = 0;
+    var srcY = 0;
+    var drawX = 0;
+    var drawY = 0;
+    ctxBg.drawImage(imgSprite,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
 }
 Avatar.prototype.updateCoors = function(){
 this.leftX = this.drawX;
@@ -114,8 +118,7 @@ Avatar.prototype.checkKeys = function() {
 		
 	}
 	if(this.isRightKey && this.rightX === gameWidth) {// voor naar de 2e kamer te gaan
-		 drawKamer2();
-		
+
 	}
 	if(this.isDownKey && this.bottomY < 490) {
 		this.drawY += this.speed;
