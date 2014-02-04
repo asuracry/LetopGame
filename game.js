@@ -35,7 +35,8 @@ var ctxTelefoon= canvasTelefoon.getContext('2d');
 var canvasHand = document.getElementById('canvasHand');
 var ctxHand = canvasHand.getContext('2d');
 
-
+//var canvasF11 = document.getElementById('canvasF11');
+//var ctxF11 =  canvasF11.getContext('2d');
 
 //var canvasAfvinken = document.getElementById('canvasAfvinken');
 //var ctxAfvinken = canvasAfvinken.getContext('2d');
@@ -56,7 +57,7 @@ var vraag4;
 var magHelpTekenen = 1;
 var remove = 0;
 var vragenFout= 0;
-
+var keyMCount =0;
 var checklist = 0;
 
 var avatar1;
@@ -69,6 +70,7 @@ var mouseY;
 var fps = 10;
 var drawInterval;
 var tekenVraag = 0;
+var muziek = true;
 
 var vraag1Beantwoord = false;
 var vraag2Beantwoord = false;
@@ -130,6 +132,10 @@ imgTelefoonSms.src = 'telefoonsms.png';
 var imgHelpMenu2 = new Image();
 imgHelpMenu2.src = 'helpmenu2.png';
 
+var imgF11 = new Image();
+imgF11.src = 'f11.png';
+
+
 var sound = new Audio('muziek.mp3');
 
 var checklistGetekend = false;
@@ -184,7 +190,7 @@ function draw() {
 	drawMenu();
 	//drawBot();
 	//text.draw();
-	sound.play();
+	//sound.play();
 	}
 	
 
@@ -208,12 +214,63 @@ function drawStartMenu() {
     ctxBg.drawImage(imgMenu,0,0,800,600,0,0,800,600);
 }
 
+//function drawF11(){
+	//ctxF11.drawImage(imgF11,0,0,93,88,729,533,93,88);
+//}
 function drawResultatenScherm(){
 	clearAll();
 	clearCtxMenu();
 	ctxResultatenScherm.drawImage(imgResultatenScherm,0,0,800,600,0,0,800,600);
-	//resultaat.draw();
-	//console.log('Score:', score);
+	ctxResultaat.clearRect(0,0,800,600);
+	ctxResultaat.font = '40px verdana';
+	ctxResultaat.fillStyle = 'white';
+	ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+	ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
+	if(score >= 0 || score <= 3)
+	{ 
+			ctxResultaat.font = '30px verdana';
+			ctxResultaat.fillStyle = 'white';
+			ctxResultaat.fillText("Let op!, je bent zeer gevoelig voor fraude", 120, 300);
+			ctxResultaat.fillText("op social media.", 120, 330); 
+			ctxResultaat.fillText("Verbreed je kennis op de site of de app!", 120, 360);
+	}
+	if(score >= 4 && score <= 6)
+	{
+			ctxResultaat.font = '30px verdana';
+			ctxResultaat.fillStyle = 'white';
+			ctxResultaat.fillText("Let op!, je bent gevoelig voor fraude", 120, 300);
+			ctxResultaat.fillText("op social media.", 120, 330); 
+			ctxResultaat.fillText("Verbreed je kennis op de site of de app!", 120, 360);
+	}
+	if(score >= 7 && score <=8)
+	{
+			ctxResultaat.font = '30px verdana';
+			ctxResultaat.fillStyle = 'white';
+			ctxResultaat.fillText("Je hebt redelijke kennis over social media", 120, 300);
+			ctxResultaat.fillText("en de fraude daarvan", 120, 330); 
+			ctxResultaat.fillText("Wel kan je jou kennis verbreden " ,120, 360);
+			ctxResultaat.fillText("op de site of de app!", 120, 380);
+	}
+	if(score === 9 || score === 10)
+	{
+			ctxResultaat.fillText("Je hebt voldoende kennis over social media", 120, 300);
+			ctxResultaat.fillText("en de fraude daarvan", 120, 330); 
+			ctxResultaat.fillText("Blijf wel op de hoogte via de site of app " ,120, 360);
+			ctxResultaat.fillText("Goed gedaan!", 120, 380);
+	}
+	if(score === 11)
+	{
+			ctxResultaat.fillText("Je hebt kennis over social media,", 120, 300);
+			ctxResultaat.fillText("de fraude daarvan en hoe je dit", 120, 330); 
+			ctxResultaat.fillText("moet voorkomen! " ,120, 360);
+			ctxResultaat.fillText("Goed gedaan!", 120, 380);
+	}
+		if(score === 12)
+	{
+			ctxResultaat.fillText("De perfecte score.", 120, 300);
+			ctxResultaat.fillText("Wij hoeven jou niks meer te", 120, 330); 
+			ctxResultaat.fillText("leren of bij te brengen! ", 120, 360);
+	}
 }
 
 function drawTelefoon(){
@@ -221,6 +278,10 @@ function drawTelefoon(){
 if(telefoonIsGetekend === 0)
 {
 	ctxTelefoon.drawImage(imgTelefoon,0,0,800,600,0,0,800,600);
+	
+
+	//resultaat.draw();
+	
 	hand.draw();
 	telefoonIsGetekend = 1;
 }
@@ -275,6 +336,7 @@ this.isLeftKey = false;
 this.isEscapeKey=false;
 this.isSpaceBarKey=false;
 this.isRkey=false;
+this.isMKey = false;
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
@@ -435,175 +497,7 @@ Text.prototype.draw = function(){
 Afvinken.prototype.draw = function(){
 	ctxAfvinken.drawImage(imgAfvinken,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 }
-Resultaat.prototype.draw = function()
-{
-	switch (score)
-		{
-			case 0:
-				//console.log('Je Score is 0');
-				this.srcX=0;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 1:
-				//console.log('Je Score is 1');
-				this.srcX = 80;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 2:
-				//console.log('Je Score is 2');
-				this.srcX = 160;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 3:
-				//console.log('Je Score is 3');
-				this.srcX = 240;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 4:
-				//console.log('Je Score is 4');
-				this.srcX = 320;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 5:
-				//console.log('Je Score is 5');
-				this.srcX = 400;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 6:
-				//console.log('Je Score is 6');
-				this.srcX = 480;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 7:
-				//console.log('Je Score is 6');
-				this.srcX = 560;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-				
-			case 8:
-				//console.log('Je Score is 6');
-				this.srcX = 640;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 9:
-				//console.log('Je Score is 6');
-				this.srcX = 720;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 10:
-				//console.log('Je Score is 6');
-				this.srcX = 800;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 11:
-				//console.log('Je Score is 6');
-				this.srcX = 880;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 12:
-				//console.log('Je Score is 6');
-				this.srcX = 960;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-		}
-			switch (vragenFout)
-				{
-			case 0:
-			
-				this.srcX=0;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 1:
-			
-				this.srcX = 80;
-				this.drawY = 320;
-					 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 2:
-				
-				this.srcX = 160;
-				this.drawY = 320;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 3:
-			
-				this.srcX = 240;
-				this.drawY = 320;
-					 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 4:
-		
-				this.srcX = 320;
-				this.drawY = 320;
-						 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 5:
-				
-				this.srcX = 400;
-				this.drawY = 320;
-				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			case 6:
-				 
-				this.srcX = 480;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
 
-			case 7:
-				 
-				this.srcX = 560;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
-				
-			case 8:
-				 
-				this.srcX = 640;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
-				
-			case 9:
-				 
-				this.srcX = 720;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
-				
-			case 10:
-				 
-				this.srcX = 800;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
-				
-			case 11:
-				 
-				this.srcX = 880;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
-				
-			case 12:
-				 
-				this.srcX = 940;
-				this.drawY = 320;
-				ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-				break;
-			
-				}
-			
-		
- //console.log('dat je het resultaat tekent');
-}
 
 Achtergrond.prototype.draw = function()
 {
@@ -985,25 +879,25 @@ Hand.prototype.checkKeys = function(){
 	
 }
 Avatar.prototype.checkKeys = function(){
-	if(this.isUpKey &&this.topY > 50){
+	if(this.isUpKey &&this.topY > 83){
 		this.drawY -= this.speed;
 	}
 	if(this.isDownKey && this.bottomY < 490){
 		this.drawY += this.speed;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -544 && achtergrond1.drawX >= -632 && vraag1Beantwoord === false)//berekening voor de koelkast vraag
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -540 && achtergrond1.drawX >= -704 && vraag1Beantwoord === false && this.drawY === 83)//berekening voor de koelkast vraag
 	{
 		vraag1.srcX = 0;
 		tekenVraag = 1;
 		//vraag1Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -96 && achtergrond1.drawX >= -348 && vraag2Beantwoord === false )//berekening voor de computer vraag
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -96 && achtergrond1.drawX >= -348 && vraag2Beantwoord === false && this.drawY === 83 )//berekening voor de computer vraag
 	{
 		
 		tekenVraag = 2;
 		//vraag2Beantwoord = true;
 	}
-		if(this.isSpaceBarKey && achtergrond1.drawX <= -1124 && achtergrond1.drawX >= -1328 && this.drawY <= 77 &&  vraag3Beantwoord === false)//berekening voor de bank vraag
+		if(this.isSpaceBarKey && achtergrond1.drawX <= -1029 && achtergrond1.drawX >= -1348 && this.drawY <= 83 &&  vraag3Beantwoord === false)//berekening voor de bank vraag
 	{
 		tekenVraag = 3;
 		//vraag3Beantwoord = true;
@@ -1014,17 +908,17 @@ Avatar.prototype.checkKeys = function(){
 		//vraag4Beantwoord = true;
 	}
 		
-		if(this.isSpaceBarKey && achtergrond1.drawX <= -2076 && achtergrond1.drawX >= -2444 && this.drawY === 50 && vraag5Beantwoord === false)//berekening voor het familie portret
+		if(this.isSpaceBarKey && achtergrond1.drawX <= -2032 && achtergrond1.drawX >= -2392 && this.drawY === 83 && vraag5Beantwoord === false)//berekening voor het familie portret
 	{
 		tekenVraag = 5;
 		//vraag5Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -1460 && achtergrond1.drawX >= -1492 && this.drawY === 50 && vraag6Beantwoord === false)//berekening voor de prullebak
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -1444 && achtergrond1.drawX >= -1524 && this.drawY === 83 && vraag6Beantwoord === false)//berekening voor de prullebak
 	{
 		tekenVraag = 6;
 		//vraag6Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -1868 && achtergrond1.drawX >= -1892 && this.drawY === 50 && vraag7Beantwoord === false)//berekening voor de agenda
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -1820 && achtergrond1.drawX >= -1924 && this.drawY === 83 && vraag7Beantwoord === false)//berekening voor de agenda
 	{
 		tekenVraag = 7;
 		//vraag7Beantwoord = true;
@@ -1034,16 +928,25 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 8;
 		//vraag8Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -3496 && achtergrond1.drawX >= -3648 && this.drawY === 50 && vraag9Beantwoord === false)// berekening voor de hond
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -3496 && achtergrond1.drawX >= -3648 && this.drawY === 83 && vraag9Beantwoord === false)// berekening voor de hond
 		{
 		tekenVraag = 9;
 		//vraag9Beantwoord = true;
 		}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -2672 && achtergrond1.drawX >= -2764 && this.drawY === 50 )// berekening voor de telefoon
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -2686 && achtergrond1.drawX >= -2760 && this.drawY === 83 )// berekening voor de telefoon
 		{
 
 			drawTelefoon();
 		}
+	if(muziek === true)
+		{
+				sound.play();
+		}
+	   if(muziek === false)
+		{
+			sound.pause();
+		}
+	
 
 	
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -1900  && achtergrond1.drawX >=-2012 && vraag1Beantwoord === true && vraag2Beantwoord === true && 
@@ -1271,6 +1174,25 @@ function checkKeyDown(e){
 			e.preventDefault();
 		}
 		avatar1.isSpaceBarKey=true;
+		e.preventDefault();
+	}
+	if(keyID ===77)
+	{
+		avatar1.isMKey = true;
+		keyMCount ++;
+		console.log(keyMCount);
+		if(keyMCount % 2 === 1)
+		{
+			console.log('oneven');
+			muziek = false;
+		}
+		if(keyMCount % 2 ===0)
+		{
+			console.log('even');
+			muziek = true;
+		}
+	
+	
 		e.preventDefault();
 	}
 	if(keyID === 82){
@@ -1531,6 +1453,11 @@ function checkKeyUp(e){
 	if(keyID === 69)
 	{
 		achtergrond1.isEkey=false;
+		e.preventDefault();
+	}
+	if(keyID ===77)
+	{
+		avatar1.isMKey = false;
 		e.preventDefault();
 	}
 	
