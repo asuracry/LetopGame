@@ -90,7 +90,7 @@ var telefoonIsGetekend =0;
 
 var telefoonIsDrawn = false;
 var imgVraag = new Image();
-imgVraag.src = 'vragen.png';
+imgVraag.src = 'vragen2.png';
 
 var imgSprite = new Image();
 imgSprite.src = 'spritedefinitief.png';
@@ -106,7 +106,7 @@ var imgResultaat = new Image();
 imgResultaat.src = 'cijfers.png';
 
 var imgMenu = new Image();
-imgMenu.src = 'introductie2.png';
+imgMenu.src = 'introductie3.png';
 
 var imgChecklist = new Image();
 imgChecklist.src = 'telefoonchecklist.png';
@@ -224,10 +224,12 @@ function drawResultatenScherm(){
 	ctxResultaat.clearRect(0,0,800,600);
 	ctxResultaat.font = '40px verdana';
 	ctxResultaat.fillStyle = 'white';
-	ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
-	ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
+
 	if(score >= 0 || score <= 3)
 	{ 
+			ctxResultaat.clearRect(0,0,800,600);
+			ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+			ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
 			ctxResultaat.font = '30px verdana';
 			ctxResultaat.fillStyle = 'white';
 			ctxResultaat.fillText("Let op!, je bent zeer gevoelig voor fraude", 120, 300);
@@ -236,6 +238,9 @@ function drawResultatenScherm(){
 	}
 	if(score >= 4 && score <= 6)
 	{
+			ctxResultaat.clearRect(0,0,800,600);
+			ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+			ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
 			ctxResultaat.font = '30px verdana';
 			ctxResultaat.fillStyle = 'white';
 			ctxResultaat.fillText("Let op!, je bent gevoelig voor fraude", 120, 300);
@@ -244,32 +249,44 @@ function drawResultatenScherm(){
 	}
 	if(score >= 7 && score <=8)
 	{
+			ctxResultaat.clearRect(0,0,800,600);
+			ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+			ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
 			ctxResultaat.font = '30px verdana';
 			ctxResultaat.fillStyle = 'white';
 			ctxResultaat.fillText("Je hebt redelijke kennis over social media", 120, 300);
 			ctxResultaat.fillText("en de fraude daarvan", 120, 330); 
 			ctxResultaat.fillText("Wel kan je jou kennis verbreden " ,120, 360);
-			ctxResultaat.fillText("op de site of de app!", 120, 380);
+			ctxResultaat.fillText("op de site of de app!", 120, 390);
 	}
 	if(score === 9 || score === 10)
 	{
+			ctxResultaat.clearRect(0,0,800,600);
+			ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+			ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
 			ctxResultaat.fillText("Je hebt voldoende kennis over social media", 120, 300);
 			ctxResultaat.fillText("en de fraude daarvan", 120, 330); 
 			ctxResultaat.fillText("Blijf wel op de hoogte via de site of app " ,120, 360);
-			ctxResultaat.fillText("Goed gedaan!", 120, 380);
+			ctxResultaat.fillText("Goed gedaan!", 120, 390);
 	}
 	if(score === 11)
 	{
+			ctxResultaat.clearRect(0,0,800,600);
+			ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+			ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
 			ctxResultaat.fillText("Je hebt kennis over social media,", 120, 300);
 			ctxResultaat.fillText("de fraude daarvan en hoe je dit", 120, 330); 
 			ctxResultaat.fillText("moet voorkomen! " ,120, 360);
-			ctxResultaat.fillText("Goed gedaan!", 120, 380);
+			ctxResultaat.fillText("Goed gedaan!", 120, 390);
 	}
 		if(score === 12)
 	{
+			ctxResultaat.clearRect(0,0,800,600);
+			ctxResultaat.fillText('Aantal vragen goed:  ' + score, 120, 150);
+			ctxResultaat.fillText('Aantal vragen fout:	' + vragenFout, 120, 200);
 			ctxResultaat.fillText("De perfecte score.", 120, 300);
 			ctxResultaat.fillText("Wij hoeven jou niks meer te", 120, 330); 
-			ctxResultaat.fillText("leren of bij te brengen! ", 120, 360);
+			ctxResultaat.fillText("leren of bij te brengen! ", 120, 390);
 	}
 }
 
@@ -1094,7 +1111,11 @@ function introductie(){
 function checkKeyDown(e){
 	var keyID = e.keyCode || e.which;
 	if (keyID === 38 || keyID ===87) { //38 betekent pijl omhoog,87 betekent w toets
-		if(telefoonIsGetekend === 1)
+	if(helpIsDrawn === true)
+	{
+		e.preventDefault();
+	}
+	else	if(telefoonIsGetekend === 1)
 		{
 			hand.isUpKey= true;
 			hand.draw();
@@ -1114,7 +1135,7 @@ function checkKeyDown(e){
 			{
 			//console.log('volgende pagina');
 			drawNextPage();
-				e.preventDefault();
+			e.preventDefault();
 			}
 		else if(telefoonIsGetekend === 1){
 			hand.isRightKey = true;
@@ -1130,7 +1151,11 @@ function checkKeyDown(e){
 			}
 	}
 	if (keyID === 40 || keyID ===83) { 
-	 if(telefoonIsGetekend === 1)
+	if(helpIsDrawn === true)
+	{
+		e.preventDefault();
+	}
+	else if(telefoonIsGetekend === 1)
 		{
 			hand.isDownKey = true;
 			hand.draw();
@@ -1167,14 +1192,20 @@ function checkKeyDown(e){
 		e.preventDefault();
 	}
 	if(keyID === 32){
-		if(telefoonIsGetekend === 1)
+	if(helpIsDrawn === true)
+	{
+		e.preventDefault();
+	}
+		else if(telefoonIsGetekend === 1)
 		{
 			hand.isSpaceBarKey=true;
 			hand.draw();
 			e.preventDefault();
 		}
+		else{
 		avatar1.isSpaceBarKey=true;
 		e.preventDefault();
+		}
 	}
 	if(keyID ===77)
 	{
