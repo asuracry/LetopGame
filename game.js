@@ -19,18 +19,30 @@ var ctxMenu = canvasMenu.getContext('2d');
 var canvasChecklist = document.getElementById('canvasChecklist');
 var ctxChecklist = canvasChecklist.getContext('2d');
 
-var canvasTelefoon = document.getElementById('canvasTelefoon');
-var ctxTelefoon = canvasTelefoon.getContext('2d');
-
 var canvasHelp = document.getElementById('canvasHelp');
 var ctxHelp = canvasHelp.getContext('2d');
+
+var canvasTelefoon = document.getElementById('canvasHelp');
+var ctxTelefoon = canvasTelefoon.getContext('2d');
+
+//var canvasAfvinken = document.getElementById('canvasAfvinken');
+//var ctxAfvinken = canvasAfvinken.getContext('2d');
+
+
+
+
+  
+
+
 
 var vraag1;
 var vraag2;
 var vraag3;
 var vraag4;
+
 var magHelpTekenen = 1;
 
+var vragenFout= 0;
 
 var checklist = 0;
 
@@ -58,14 +70,6 @@ var vraag10Beantwoord = false;
 
 var score = 0;
 
-var vragenFout = new Array();
-vragenFout[0]="Tv vraag";       
-vragenFout[1]="Koelkast vraag";     
-vragenFout[2]="Poster vraag";     
-vragenFout[3]="Game vraag";     
-vragenFout[4]="Schilderij vraag"; 
-
-var fouten = 0;         
 
 var imgVraag = new Image();
 imgVraag.src = 'vragensprite.png';
@@ -75,7 +79,7 @@ imgSprite.src = 'sprite4.png';
 imgSprite.addEventListener('load',init,false);
 
 var imgStartMenu = new Image();
-imgStartMenu.src = 'introductie.png';
+imgStartMenu.src = 'startmenu.png';
 
 var imgResultatenScherm = new Image();
 imgResultatenScherm.src = 'resultatenscherm.png';
@@ -84,16 +88,16 @@ var imgResultaat = new Image();
 imgResultaat.src = 'cijfers.png';
 
 var imgMenu = new Image();
-imgMenu.src = 'menu.png';
+imgMenu.src = 'introductie.png';
 
 var imgChecklist = new Image();
 imgChecklist.src = 'checklist.png';
 
 var imgTelefoon = new Image();
-imgTelefoon.src = 'remco.png';
+imgTelefoon.src = 'telefoon.png';
 
-var imgHelp = new Image();
-imgHelp.src = 'introductie.png';
+var sound = new Audio('music.mp3');
+sound.play();
 
 //var imgAfvinken = new Image();
 //imgAfvinken.src = 'menu.png';
@@ -103,11 +107,6 @@ function init() {
 	drawStartMenu();
 	document.addEventListener('click',mouseClicked,false);
 	
-}
-
-function drawHelp()
-{
-	ctxHelp.drawImage(imgHelp,0,0,800,600,0,0,800,600);
 }
 
 // functie van het opstarten en spelen van de game
@@ -139,7 +138,7 @@ function draw() {
 	avatar1.draw();
 	checklist.draw();
 	//afvinken1.draw();
-	//drawStartMenu();
+	drawMenu();
 	
 }
 
@@ -148,31 +147,14 @@ function startDrawing() {
     drawInterval = setInterval(draw,fps);
 }
 function drawMenu(){
-		ctxMenu.drawImage(imgMenu,0,0,800,600,600,500,800,600);
+		ctxMenu.drawImage(imgMenu,0,0,800,600,600,600,800,600);
 }
-
-function drawTelefoon(){
-ctxTelefoon.drawImage(imgTelefoon,0,0,800,600,0,0,800,600);
-}
-
 
 function stopDrawing() {
     clearInterval(drawInterval);
 }
 function drawStartMenu() {
-	ctxBg.drawImage(imgStartMenu,0,0,800,600,0,0,800,600);
-}
-
-function drawHelpMenu() {
-	if(magHelpTekenen === 1)
-	{
-	ctxHelp.drawImage(imgStartMenu,0,0,800,600,0,0,800,600);
-	}
-	//if(magHelpTekenen === 0)
-	//{
-	//ctxHelp.clearRect(0,0,800,600);
-	//}
-
+    ctxBg.drawImage(imgMenu,0,0,800,600,0,0,800,600);
 }
 
 function drawResultatenScherm(){
@@ -181,6 +163,10 @@ function drawResultatenScherm(){
 	ctxResultatenScherm.drawImage(imgResultatenScherm,0,0,800,600,0,0,800,600);
 	resultaat.draw();
 	//console.log('Score:', score);
+}
+
+function drawTelefoon(){
+	ctxTelefoon.drawImage(imgTelefoon,0,0,600,600,100,0,600,600);
 }
 
 
@@ -292,12 +278,28 @@ function Afvinken(){
 function Resultaat(){
 	this.srcX;
     this.srcY = 0;
-    this.drawX = 530;
+    this.drawX =  530;
     this.drawY = 200;
     this.width = 80;
     this.height= 70;
 }
 
+function drawHelpMenu() {
+	if(magHelpTekenen === 1)
+	{
+	ctxHelp.drawImage(imgMenu,0,0,800,600,0,0,800,600);
+	}
+	//if(magHelpTekenen === 0)
+	//{
+	//ctxHelp.clearRect(0,0,800,600);
+	//}
+
+}
+
+function drawHelp()
+{
+	ctxHelp.drawImage(imgHelp,0,0,800,600,0,0,800,600);
+}
 Afvinken.prototype.draw = function(){
 	ctxAfvinken.drawImage(imgAfvinken,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 }
@@ -341,7 +343,7 @@ Resultaat.prototype.draw = function()
 				 ctxResultaat.drawImage(imgResultaat,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 				break;
 		}
-			switch (fouten)
+			switch (vragenFout)
 				{
 			case 0:
 			
@@ -422,45 +424,40 @@ ctxChecklist.drawImage(imgChecklist,this.srcX,this.srcY,this.width,this.height,t
 Vraag.prototype.checkKeys= function(){
 if(vraag1.isOneKey === true)//begin van koeklast
 	{
-	
 	score += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
 	}
 if(vraag1.isTwoKey === true || vraag1.isThreeKey === true)
 	{
-		fouten +=1 ;
-		clearCtxVraag();
-		tekenVraag = 0;
+	vragenFout +=1;
+	clearCtxVraag();
+	tekenVraag = 0;
 	}
-
-if(vraag2.isOneKey === true || vraag2.isTwoKey === true )//begin tv
+if(vraag2.isOneKey === true || vraag2.isTwoKey === true)//begin tv
 	{
-		fouten += 1;
-		clearCtxVraag();
-		tekenVraag = 0;
+	vragenFout +=1;
+	clearCtxVraag();
+	tekenVraag = 0;
 	}
-
 if(vraag2.isThreeKey === true)//eind van tv
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
 	}
-	
-if(vraag3.isOneKey === true || vraag3.isThreeKey === true )//begin van poster
+if(vraag3.isOneKey === true || vraag3.isThreeKey === true)//begin van poster
 	{
-	fouten +=1;
+	vragenFout += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
 	}
-if(vraag3.isTwoKey === true)
+if(vraag3.isTwoKey === true)//einde van de poster
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
 	}
-
 if(vraag4.isOneKey === true)//begin van schilderij
 	{
 	clearCtxVraag();
@@ -469,25 +466,23 @@ if(vraag4.isOneKey === true)//begin van schilderij
 	}
 if(vraag4.isTwoKey === true || vraag4.isThreeKey === true)
 	{
-	 fouten += 1;
+	vragenFout += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
 	}
-
-if(vraag5.isOneKey === true)//begin van game
+if(vraag5.isOneKey === true || vraag5.isTwoKey === true)//begin van game
+	{
+	vragenFout += 1;
+	clearCtxVraag();
+	tekenVraag = 0;
+	}
+if(vraag5.isThreeKey === true)//eind van game
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
-	}
-if(vraag5.isTwoKey === true || vraag5.isThreeKey === true )
-	{
-	fouten += 1
-	clearCtxVraag();
-	tekenVraag = 0;
 	
 	}
-
 
 
 }
@@ -570,12 +565,10 @@ Avatar.prototype.checkKeys = function(){
 	vraag3Beantwoord === true && vraag4Beantwoord === true && vraag5Beantwoord === true && this.drawY === 110)
 	{
 		drawResultatenScherm();
-		console.log('score:' , score ,  'fouten:' , fouten);
 	}
 
 	if(this.isRkey){
 		console.log('Y:' , this.drawY);
-		drawTelefoon();
 		//console.log(this.drawX);
 	}
 }
@@ -747,7 +740,7 @@ function checkKeyDown(e){
 		vraag4.isTwoKey = true;
 		e.preventDefault();
 	}
-	if((keyID === 50 || keyID=== 98) && tekenVraag ===5){
+	if((keyID === 50 || keyID=== 98) && tekenVraag ===45){
 		vraag5.isTwoKey = true;
 		e.preventDefault();
 	}
@@ -771,7 +764,7 @@ function checkKeyDown(e){
 		vraag5.isThreeKey = true;
 		e.preventDefault();
 	}
-	if(keyID === 122){
+		if(keyID === 122){
 		switch(magHelpTekenen)
 		{
 			case(0):
@@ -787,7 +780,11 @@ function checkKeyDown(e){
 		}
 	   e.preventDefault();
 	}
-	
+		if(keyID === 84)
+		{
+		drawTelefoon();
+			   e.preventDefault();
+		}
 	
 	
 
@@ -864,11 +861,15 @@ function checkKeyUp(e){
 		vraag5.isThreeKey = false;
 		e.preventDefault();
 	}
-	if(keyID === 122)
+		if(keyID === 122)
 	{
 		e.preventDefault();
 	}
-
+	if(keyID === 84)
+	{
+		e.preventDefault();
+	}
+		
  
 }
 
