@@ -5,8 +5,11 @@ var ctxAvatar = canvasAvatar.getContext('2d');
 
 
 var avatar1;
+var btnPlay = new Button(0,0,0,0);
 var gameWidth = canvasBg.width;
 var gameHeight = canvasBg.height;
+var mouseX;
+var mouseY;
 var fps = 10;
 var drawInterval;
 
@@ -19,15 +22,20 @@ imgSprite.addEventListener('load',init,false);
 
 //main functions
 function init() {
-    drawBg();
+	drawMenu()
+	document.addEventListener('click',mouseClicked,false);
+	
+}
+
+
+function playGame(){
+	drawBg();
     startDrawing();
 	avatar1 = new Avatar();
 	document.addEventListener('keydown',checkKeyDown,false);
 	document.addEventListener('keyup',checkKeyUp,false);
-	
-	
+	document.removeEventListener('click',mouseClicked,false);// zorgt ervoor dat de game niet opnieuw kan worden
 }
-
 
 function draw() {
  avatar1.draw();
@@ -41,13 +49,16 @@ function startDrawing() {
 function stopDrawing() {
     clearInterval(drawInterval);
 }
+function drawMenu() {
+    ctxBg.drawImage(imgSprite,0,737,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
+}
 
 function drawBg() {
     var srcX = 0;
     var srcY = 0;
     var drawX = 0;
     var drawY = 0;
-    ctxBg.drawImage(imgSprite,srcX,srcY,gameWidth,gameHeight,drawX,drawY,gameWidth,gameHeight);
+    ctxBg.drawImage(imgSprite,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
 }
 
 
@@ -121,7 +132,33 @@ function clearCtxAvatar() {
 }
 //end of jet functions
 
+
+//button object
+function Button(xL,xR,yT,yB){
+	this.xLeft = xL;
+	this.xRight = xR;
+	this.yTop = yT;
+	this.yBottom = yB;
+};
+
+Button.prototype.checkClicked = function(){
+	if (this.xLeft <= mouseX && mouseX <= this.xRight && this.yTop <= mouseY && mouseY <= this.yBottom) return true;		return true;
+		
+};
+
+//end of button object
+
+
+
+
 //event functions
+
+function mouseClicked(e){
+	mouseX = e.pageX = canvasBg.offsetLeft;
+	mouseY = e.pageY = canvasBg.offsetTop;
+	if(btnPlay.checkClicked()) playGame();
+}
+
 function checkKeyDown(e){
 	var keyID = e.keyCode || e.which;
 	if (keyID === 38 || keyID ===87) { //38 betekent pijl omhoog,87 betekent w toets
