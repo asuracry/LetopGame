@@ -16,7 +16,7 @@ body {
 
 #canvasVraag{
 display:block;
-margin: -700px auto 0px;
+margin: -600px auto 0px;
 }
 
 #canvasResultatenScherm{
@@ -28,5 +28,16 @@ margin: -600px auto 0px;
 display:block;
 margin: -600px auto 0px;
 }
+
+#canvasMenu{
+display:block;
+margin: -700px auto 0px;
+}
+
+#canvasChecklist{
+display:block;
+margin: -600px auto 0px;
+}
+
 
 
