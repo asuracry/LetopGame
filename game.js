@@ -5,6 +5,7 @@ var ctxAvatar = canvasAvatar.getContext('2d');
 
 
 var avatar1;
+var vraag1;//variabele van vraag1 (voorbeeldvraag)
 var btnPlay = new Button(0,0,0,0);
 var gameWidth = canvasBg.width;
 var gameHeight = canvasBg.height;
@@ -13,21 +14,24 @@ var mouseY;
 var fps = 10;
 var drawInterval;
 
+var imgVoorbeeldVraag = new Image();
+imgVoorbeeldVraag.src = 'voorbeeldvraag.png'; 
 
 var imgSprite = new Image();
 imgSprite.src = 'sprite.png';
 imgSprite.addEventListener('load',init,false);
 
-
+var imgKamer2 = new Image();
+imgKamer2.src = 'kamer2.png';
 
 //main functions
 function init() {
-	drawMenu()
+	drawMenu();
 	document.addEventListener('click',mouseClicked,false);
 	
 }
 
-
+// functie van het opstarten en spelen van de game
 function playGame(){
 	drawBg();
     startDrawing();
@@ -53,6 +57,11 @@ function drawMenu() {
     ctxBg.drawImage(imgSprite,0,737,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
 }
 
+function drawKamer2()
+{
+	 ctxBg.drawImage(imgKamer2,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
+}
+
 function drawBg() {
     var srcX = 0;
     var srcY = 0;
@@ -61,14 +70,13 @@ function drawBg() {
     ctxBg.drawImage(imgSprite,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
 }
 
-
-
 function clearCtxBg() {
     ctxBg.clearRect(0,0,gameWidth,gameHeight);
 }
+
 //end of main functions
 
-//jet functions
+//Avatar functions
 function Avatar(){
 this.srcX=0;
 this.srcY=500;
@@ -82,13 +90,13 @@ this.isRightKey = false;
 this.isDownKey = false;
 this.isLeftKey = false;
 this.isSpaceBarKey = false;
+this.isEscapeKey=false;
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
 
 }
-//689 225
 Avatar.prototype.updateCoors = function(){
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
@@ -104,12 +112,20 @@ this.checkKeys();
 ctxAvatar.drawImage(imgSprite,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 };
 
+function resetGame(){
+ location.reload();	
+}
+
 Avatar.prototype.checkKeys = function() {
 	if(this.isUpKey && this.topY > 100 ) {
 		this.drawY -= this.speed;
 	}
 	if(this.isRightKey && this.rightX < gameWidth) {
 		this.drawX += this.speed;
+		
+	}
+	if(this.isRightKey && this.rightX === gameWidth) {// voor naar de 2e kamer te gaan
+		 drawKamer2();
 		
 	}
 	if(this.isDownKey && this.bottomY < gameHeight) {
@@ -121,6 +137,11 @@ Avatar.prototype.checkKeys = function() {
 	if(this.isSpaceBarKey && this.leftX >= 621 && this.rightX <= 750 && this.topY === 100)	//if statement voor het openen van de computer in de eerste kamer! de x-coördinaten moeten tussen de 62 en 750 liggen de y coördinaat moet 100 zijn
 	{
 	console.log('Event bereikt');
+	drawVoorbeeldVraag();
+	}
+	if(this.isEscapeKey)
+	{
+		resetGame();
 	}
 	
 }
@@ -130,7 +151,20 @@ Avatar.prototype.checkKeys = function() {
 function clearCtxAvatar() {
     ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
 }
-//end of jet functions
+//end of avatar functions
+
+//start of voorbeeldVraag functies
+function Vragen(){
+}
+
+	function drawVoorbeeldVraag()
+{	
+	 ctxBg.drawImage(imgVoorbeeldVraag,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
+}
+
+
+
+//end of voorbeeldVraag functies
 
 
 //button object
@@ -142,8 +176,7 @@ function Button(xL,xR,yT,yB){
 };
 
 Button.prototype.checkClicked = function(){
-	if (this.xLeft <= mouseX && mouseX <= this.xRight && this.yTop <= mouseY && mouseY <= this.yBottom) return true;		return true;
-		
+	if (this.xLeft <= mouseX && mouseX <= this.xRight && this.yTop <= mouseY && mouseY <= this.yBottom) return true;		return true;//checkcliked algromite voor de klik
 };
 
 //end of button object
@@ -181,6 +214,10 @@ function checkKeyDown(e){
 		avatar1.isSpaceBarKey = true;
 			e.preventDefault();
 		}
+	if(keyID=== 27){
+		avatar1.isEscapeKey=true;
+		e.preventDefault();
+	}
 	
 	
 
@@ -211,6 +248,10 @@ function checkKeyUp(e){
 		console.log('lostgelaten');
 		e.preventDefault();
 		}
+	if(keyID=== 27){
+		avatar1.isEscapeKey=false;
+		e.preventDefault();
+	}
 
  
 }
