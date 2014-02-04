@@ -192,14 +192,31 @@ if(vraag1.isOneKey === true)
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
+		console.log('vraag koelkast');
 	}
 if(vraag1.isTwoKey === true)
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
-	console.log('twee ingedrukt');
 	}
 if(vraag1.isThreeKey === true)
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	}
+if(vraag2.isOneKey === true)
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('vraag tv');
+	}
+if(vraag2.isTwoKey === true)
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('twee ingedrukt');
+	}
+if(vraag2.isThreeKey === true)
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
@@ -362,22 +379,39 @@ function checkKeyDown(e){
 		
 		e.preventDefault();
 	}
-	if(keyID === 49)
+	if(keyID === 49 && tekenVraag ===1)
 	{
 		vraag1.isOneKey = true;
 		e.preventDefault();
 
 	}
-	if(keyID === 50)
+	if(keyID === 49 && tekenVraag ===2)
+	{
+		vraag2.isOneKey = true;
+		e.preventDefault();
+		console.log(tekenVraag);
+
+	}
+	if(keyID === 50 && tekenVraag ===1 )
 	{
 		vraag1.isTwoKey = true;
-		vraag2.isTwoKey = false;
 		e.preventDefault();
 	}
-	if(keyID === 51)
+	if(keyID === 50 && tekenVraag ===2 )
+	{
+		vraag2.isTwoKey = true;
+		e.preventDefault();
+	}
+	if(keyID === 51 && tekenVraag===1)
 	{
 		vraag1.isThreeKey = true;
 		e.preventDefault();
+	}
+	if(keyID === 51 && tekenVraag===2)
+	{
+		vraag2.isThreeKey = true;
+		e.preventDefault();
+		console.log(tekenVraag);
 	}
 	
 
@@ -430,15 +464,18 @@ function checkKeyUp(e){
 	if(keyID === 49)
 	{
 		vraag1.isOneKey = false;
+		vraag2.isOneKey = false;
 		e.preventDefault();
 	}if(keyID === 50)
 	{
 		vraag1.isTwoKey = false;
+		vraag2.isTwoKey=false;
 		e.preventDefault();
 	}
 	if(keyID === 51)
 	{
 		vraag1.isThreeKey = false;
+		vraag2.isThreeKey = false;
 		e.preventDefault();
 	}
 
