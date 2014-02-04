@@ -5,7 +5,6 @@ var ctxAvatar = canvasAvatar.getContext('2d');
 
 
 var avatar1;
-var vraag1;//variabele van vraag1 (voorbeeldvraag)
 var btnPlay = new Button(0,0,0,0);
 var gameWidth = canvasBg.width;
 var gameHeight = canvasBg.height;
@@ -14,15 +13,11 @@ var mouseY;
 var fps = 10;
 var drawInterval;
 
-var imgVoorbeeldVraag = new Image();
-imgVoorbeeldVraag.src = 'voorbeeldvraag.png'; 
 
 var imgSprite = new Image();
-imgSprite.src = 'sprite.png';
+imgSprite.src = 'sprite3.png';
 imgSprite.addEventListener('load',init,false);
 
-var imgKamer2 = new Image();
-imgKamer2.src = 'kamer2.png';
 
 //main functions
 function init() {
@@ -54,12 +49,7 @@ function stopDrawing() {
     clearInterval(drawInterval);
 }
 function drawMenu() {
-    ctxBg.drawImage(imgSprite,0,737,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
-}
-
-function drawKamer2()
-{
-	 ctxBg.drawImage(imgKamer2,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
+    ctxBg.drawImage(imgSprite,0,786,800,600,0,0,800,600);
 }
 
 function drawBg() {
@@ -78,18 +68,17 @@ function clearCtxBg() {
 
 //Avatar functions
 function Avatar(){
-this.srcX=0;
-this.srcY=500;
-this.drawX=220;
-this.drawY=200;
-this.width=100;
-this.height=220;
-this.speed = 2;
+this.srcX=0;//begintpunt van x
+this.srcY=600;//begintpunt van y
+this.drawX=220;//x punt waar het getekent wordt op het canvas
+this.drawY=200;//y punt waar het getekent wordt op het canvas
+this.width=100;//breedte van de char
+this.height=185;//hoogte van de char
+this.speed = 3;
 this.isUpKey = false;
 this.isRightKey = false;
 this.isDownKey = false;
 this.isLeftKey = false;
-this.isSpaceBarKey = false;
 this.isEscapeKey=false;
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
@@ -117,7 +106,7 @@ function resetGame(){
 }
 
 Avatar.prototype.checkKeys = function() {
-	if(this.isUpKey && this.topY > 100 ) {
+	if(this.isUpKey && this.topY > 80 ) {
 		this.drawY -= this.speed;
 	}
 	if(this.isRightKey && this.rightX < gameWidth) {
@@ -128,16 +117,11 @@ Avatar.prototype.checkKeys = function() {
 		 drawKamer2();
 		
 	}
-	if(this.isDownKey && this.bottomY < gameHeight) {
+	if(this.isDownKey && this.bottomY < 490) {
 		this.drawY += this.speed;
 	}
 	if(this.isLeftKey && this.leftX > 0) {
 		this.drawX -= this.speed;
-	}
-	if(this.isSpaceBarKey && this.leftX >= 621 && this.rightX <= 750 && this.topY === 100)	//if statement voor het openen van de computer in de eerste kamer! de x-coördinaten moeten tussen de 62 en 750 liggen de y coördinaat moet 100 zijn
-	{
-	console.log('Event bereikt');
-	drawVoorbeeldVraag();
 	}
 	if(this.isEscapeKey)
 	{
@@ -155,11 +139,6 @@ function clearCtxAvatar() {
 
 //start of voorbeeldVraag functies
 function Vragen(){
-}
-
-	function drawVoorbeeldVraag()
-{	
-	 ctxBg.drawImage(imgVoorbeeldVraag,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
 }
 
 
@@ -210,10 +189,6 @@ function checkKeyDown(e){
 		avatar1.isLeftKey=true;
 		e.preventDefault();
 	}
-	if (keyID ===32) {
-		avatar1.isSpaceBarKey = true;
-			e.preventDefault();
-		}
 	if(keyID=== 27){
 		avatar1.isEscapeKey=true;
 		e.preventDefault();
@@ -243,11 +218,6 @@ function checkKeyUp(e){
 		e.preventDefault();
 		
 	}
-	if (keyID ===32) {
-		avatar1.isSpaceBarKey = false;
-		console.log('lostgelaten');
-		e.preventDefault();
-		}
 	if(keyID=== 27){
 		avatar1.isEscapeKey=false;
 		e.preventDefault();
