@@ -46,12 +46,13 @@ var ctxHand = canvasHand.getContext('2d');
   
 
 var helpIsDrawn = false;
-
+var vraagIsGetekend = false;
 var vraag1;
 var vraag2;
 var vraag3;
 var vraag4;
-
+ 
+ var magHandTekenen = false;
 var magHelpTekenen = 1;
 var remove = 0;
 var vragenFout= 0;
@@ -83,9 +84,9 @@ var vraag11Beantwoord = false;
 var vraag12Beantwoord = false;
 
 var score = 0;
-var telefoonIsGetekend;
+var telefoonIsGetekend =0;
 
-
+var telefoonIsDrawn = false;
 var imgVraag = new Image();
 imgVraag.src = 'vragen.png';
 
@@ -125,8 +126,8 @@ imgHand.src = 'cartoonhand.png';
 
 
 
-var sound = new Audio('music.mp3');
-//sound.play();
+var sound = new Audio('muziek.mp3');
+
 
 
 //var imgAfvinken = new Image();
@@ -178,6 +179,7 @@ function draw() {
 	drawMenu();
 	//drawBot();
 	//text.draw();
+		sound.play();
 	}
 	
 
@@ -191,6 +193,7 @@ function startDrawing() {
 }
 function drawMenu(){
 		ctxMenu.drawImage(imgMenu,0,0,800,600,600,600,800,600);
+	
 }
 
 function stopDrawing() {
@@ -210,7 +213,7 @@ function drawResultatenScherm(){
 
 function drawTelefoon(){
 	ctxTelefoon.drawImage(imgTelefoon,0,0,800,600,0,0,800,600);
-	telefoonIsGetekend = 1;
+	
 }
 
 
@@ -231,7 +234,7 @@ function clearCtxMenu(){
 }
 
 function clearCtxHand(){
-	ctxHand.clearRect(0,0,800,600);
+	ctxHand.clearRect(0,0,36000000,36000000);
 }
 
 function clearAll(){ 
@@ -327,6 +330,10 @@ function Achtergrond(){
     
 }
 
+function clearCtxTelefoon()
+{
+	ctxTelefoon.clearRect(0,0,800,600);
+}
 function Afvinken(){
 	this.srcX - 0;
     this.srcY = 0;
@@ -387,13 +394,23 @@ function drawNextPage(){
 }
 
 Hand.prototype.draw = function(){
-this.updateCoors();
-clearCtxHand();
-this.checkKeys();
 
-ctxHand.drawImage(imgHand,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-avatar1.checkTekenenVanVraag();
+if(magHandTekenen = true)
+{
+	this.updateCoors();
+	clearCtxHand();
+	this.checkKeys();
+
+	ctxHand.drawImage(imgHand,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+	//avatar1.checkTekenenVanVraag();
+	console.log('hand tekenen');
 }
+if(magHandTekenen = false)
+{
+	ctxHand.clearRect(0,0,800,600);
+}
+}
+
 
 
 Text.prototype.draw = function(){
@@ -592,12 +609,64 @@ if(vraag5.isThreeKey === true)//eind van game
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
-	
 	}
+if(vraag10.isTwoKey === true)
+	{	
+		
+		clearCtxVraag();
+		tekenVraag = 0;
+		score += 1;
+		
+	}
+if(vraag10.isOneKey === true || vraag10.isThreeKey == true)
+	{
+		vragenFout += 1;
+		clearCtxVraag();
+		tekenVraag = 0;
+	}
+if(vraag11.isThreeKey === true)
+	{	
+		clearCtxVraag();
+		tekenVraag = 0;
+		score += 1;
+		
+	}
+if(vraag11.isOneKey === true || vraag11.isTwoKey == true)
+	{
+		vragenFout += 1;
+		clearCtxVraag();
+		tekenVraag = 0;
+	}
+if(vraag12.isOneKey === true)
+	{	
+		clearCtxVraag();
+		tekenVraag =0;
+		score += 1;
+		
+	}
+if(vraag12.isTwoKey === true || vraag12.isThreeKey == true)
+	{
+		vragenFout += 1;
+		clearCtxVraag();
+		tekenVraag = 0;
+	}
+	
+
 
 
 }
 
+function clearCtxHand(){
+ctxHand.clearRect(0,0,800,600);
+}
+function telefoonSluiten(){
+telefoonIsGetekend = 0;
+ magHandTekenen = false;
+console.log(telefoonIsGetekend);
+clearCtxTelefoon();
+clearCtxHand();
+
+}
 Avatar.prototype.updateCoors = function(){
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
@@ -636,10 +705,7 @@ Achtergrond.prototype.checkKeys = function() {
 	
 }
 
-function drawChecklist()
-{
-	ctxTelefoon
-}
+
 Hand.prototype.checkKeys = function(){
 	if(this.isRightKey && this.drawX <= 516) {
 		this.drawX += 20;
@@ -654,11 +720,12 @@ Hand.prototype.checkKeys = function(){
 	if(this.isDownKey && this.drawY <= 462){
 		this.drawY += 20;
 	}
-	if(this.isSpaceBarKey === true && this.drawX >= 270 && this.drawX <= 310 && this.drawY >= 170 && this.drawY <= 190 && vraag10Beantwoord === false)// berekening voor de knop van de eerste telefoon vraag
+	if(this.isSpaceBarKey === true && this.drawX >= 270 && this.drawX <= 310 && this.drawY >= 170 && this.drawY <= 190 && vraag10Beantwoord === false )// berekening voor de knop van de eerste telefoon vraag
 	{
 		tekenVraag = 10;
 		vraag10Beantwoord = true;
-		//console.log('telefoon vraag 1');
+
+
 	}
 		if(this.isSpaceBarKey === true && this.drawX >= 370 && this.drawX <= 410 && this.drawY >= 170 && this.drawY <= 190 && vraag11Beantwoord === false)// berekening voor de knop van de tweede telefoon vraag
 		{
@@ -678,14 +745,18 @@ Hand.prototype.checkKeys = function(){
 	}
 	if(this.isSpaceBarKey === true && this.drawX >=250 && this.drawX <= 530  && this.drawY >= 330 && this.drawY <= 390)//berekening voor de knop van het sluiten
 	{
-		console.log('sluiten');
+		magHandTekenen = false;
+		telefoonSluiten();
+		
 	}
 	if(this.isSpaceBarKey === true && this.drawX >=430 && this.drawX <= 530  && this.drawY === 90 )//berkening voor de home knop
 	{
-		ctxTelefoon.clearRect(0,0,800,600);
+
 		ctxChecklist.clearRect(0,0,800,600);
-		drawTelefoon();
+		//drawTelefoon();
 	}
+	
+	
 }
 Avatar.prototype.checkKeys = function(){
 	if(this.isUpKey &&this.topY > 50){
@@ -700,7 +771,7 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 1;
 		vraag1Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -96 && achtergrond1.drawX >= -348 && vraag2Beantwoord === false)//berekening voor de computer vraag
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -96 && achtergrond1.drawX >= -348 && vraag2Beantwoord === false )//berekening voor de computer vraag
 	{
 		
 		tekenVraag = 2;
@@ -711,10 +782,15 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 3;
 		vraag3Beantwoord = true;
 	}
-		if(this.isSpaceBarKey && achtergrond1.drawX <=-3124 && achtergrond1.drawX >= -3204 && vraag4Beantwoord === false)//berekening voor de knuffel vraag
+		if(this.isSpaceBarKey && achtergrond1.drawX <=-3124 && achtergrond1.drawX >= -3204 && vraag4Beantwoord === false)//berekening voor de giraffe vraag
 	{
 		tekenVraag = 4;
 		vraag4Beantwoord = true;
+	}
+		if(this.isSpaceBarKey && achtergrond1.drawX <=-3020 && achtergrond1.drawX >= -3092 && vraag8Beantwoord === false)//berekening voor de beer vraag
+	{
+		tekenVraag = 8;
+		vraag8Beantwoord = true;
 	}
 		if(this.isSpaceBarKey && achtergrond1.drawX <= -2076 && achtergrond1.drawX >= -2444 && this.drawY === 50 && vraag5Beantwoord === false)//berekening voor het familie portret
 	{
@@ -731,10 +807,16 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 7;
 		vraag7Beantwoord = true;
 	}
-	if(this.isSpaceBarKey && achtergrond1.drawX <= -3400 && achtergrond1.drawX >= -3460 && this.drawY === 50)// berekening voor de hond
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -3496 && achtergrond1.drawX >= -3648 && this.drawY === 50 && vraag9Beantwoord === false)// berekening voor de hond
 		{
-				console.log('woef');
+		tekenVraag = 9;
+		vraag9Beantwoord = true;
 		}
+	if(this.isSpaceBarKey && achtergrond1.drawX <= -988 && achtergrond1.drawX >= -1036 && this.drawY === 50 )// berekening voor de hond
+		{
+			console.log('tekenen');
+		}
+
 	
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -1900  && achtergrond1.drawX >=-2012 && vraag1Beantwoord === true && vraag2Beantwoord === true && 
 	vraag3Beantwoord === true && vraag4Beantwoord === true && vraag5Beantwoord === true && this.drawY === 110)
@@ -797,19 +879,31 @@ Avatar.prototype.checkTekenenVanVraag = function(){
 	vraag7.draw();
 	break;
 	
-	case 10: //telefoon vraag 1
+	case 8: //beer
+	clearCtxMenu();
+	vraag8.srcX = 4000;
+	vraag8.draw();
+	break;
+	
+	case 9: //hond & bed
+	clearCtxMenu();
+	vraag9.srcX = 7200;
+	vraag9.draw();
+	break;
+	
+	case 10: //telefoon vraag 1, juiste antwoord is 2
 	clearCtxHand();
 	vraag10.srcX = 8000;
 	vraag10.draw();
 	break;
 	
-	case 11: //telefoon vraag 2
+	case 11: //telefoon vraag 2, juiste antwoord is  3
 	clearCtxHand();
 	vraag11.srcX = 8800;
 	vraag11.draw();
 	break;
 	
-	case 12: //telefoonvraag 3
+	case 12: //telefoonvraag 3, juiste antwoord is 1
 	clearCtxHand();
 	vraag12.srcX = 5600;
 	vraag12.draw();
@@ -980,6 +1074,48 @@ function checkKeyDown(e){
 		e.preventDefault();
 
 	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===6)
+	{
+		vraag6.isOneKey = true;
+		e.preventDefault();
+
+	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===7)
+	{
+		vraag7.isOneKey = true;
+		e.preventDefault();
+
+	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===8)
+	{
+		vraag8.isOneKey = true;
+		e.preventDefault();
+
+	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===9)
+	{
+		vraag9.isOneKey = true;
+		e.preventDefault();
+
+	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===10)
+	{
+		vraag10.isOneKey = true;
+		e.preventDefault();
+
+	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===11)
+	{
+		vraag11.isOneKey = true;
+		e.preventDefault();
+
+	}
+			if((keyID === 49 || keyID===97) && tekenVraag ===12)
+	{
+		vraag12.isOneKey = true;
+		e.preventDefault();
+
+	}
 	if((keyID === 50 || keyID===98) && tekenVraag ===1 ){
 		vraag1.isTwoKey = true;
 		e.preventDefault();
@@ -998,6 +1134,34 @@ function checkKeyDown(e){
 	}
 	if((keyID === 50 || keyID=== 98) && tekenVraag ===5){
 		vraag5.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===6){
+		vraag6.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===7){
+		vraag7.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===8){
+		vraag8.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===9){
+		vraag9.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===10){
+		vraag10.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===11){
+		vraag11.isTwoKey = true;
+		e.preventDefault();
+	}
+		if((keyID === 50 || keyID=== 98) && tekenVraag ===12){
+		vraag12.isTwoKey = true;
 		e.preventDefault();
 	}
 	if((keyID === 51 || keyID=== 99) && tekenVraag===1){
@@ -1020,6 +1184,34 @@ function checkKeyDown(e){
 		vraag5.isThreeKey = true;
 		e.preventDefault();
 	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===6){
+		vraag6.isThreeKey = true;
+		e.preventDefault();
+	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===7){
+		vraag7.isThreeKey = true;
+		e.preventDefault();
+	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===8){
+		vraag8.isThreeKey = true;
+		e.preventDefault();
+	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===9){
+		vraag9.isThreeKey = true;
+		e.preventDefault();
+	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===10){
+		vraag10.isThreeKey = true;
+		e.preventDefault();
+	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===11){
+		vraag11.isThreeKey = true;
+		e.preventDefault();
+	}
+	if((keyID === 51 || keyID=== 99) && tekenVraag===12){
+		vraag12.isThreeKey = true;
+		e.preventDefault();
+	}
 		if(keyID === 122){//f11
 		switch(magHelpTekenen)
 		{
@@ -1037,12 +1229,24 @@ function checkKeyDown(e){
 
 	   e.preventDefault();
 	}
-		if(keyID === 84)
+		if(keyID === 84){// t key
+			if(telefoonIsGetekend === 0)
+			{
+			 magHandTekenen = false;
+			drawTelefoon();
+			e.preventDefault();
+			telefoonIsGetekend = 1;
+			}
+		if(telefoonIsGetekend === 1)
 		{
-		drawTelefoon();
+		magHandTekenen = true;
 		hand.draw();
-			   e.preventDefault();
 		}
+		}
+		if(keyID === 90){
+
+		}
+		
 	
 
  
@@ -1104,6 +1308,13 @@ function checkKeyUp(e){
 		vraag3.isOneKey = false;
 		vraag4.isOneKey = false;
 		vraag5.isOneKey = false;
+		vraag6.isOneKey = false;
+		vraag7.isOneKey = false;
+		vraag8.isOneKey = false;
+		vraag9.isOneKey = false;
+		vraag10.isOneKey = false;
+		vraag11.isOneKey = false;
+		vraag12.isOneKey = false;
 		e.preventDefault();
 		
 	}
@@ -1114,6 +1325,14 @@ function checkKeyUp(e){
 		vraag3.isTwoKey = false;
 		vraag4.isTwoKey = false;
 		vraag5.isTwoKey = false;
+		vraag6.isTwoKey = false;
+		vraag7.isTwoKey = false;
+		vraag8.isTwoKey = false;
+		vraag9.isTwoKey = false;
+		vraag10.isTwoKey = false;
+		vraag11.isTwoKey = false;
+		vraag12.isTwoKey = false;
+									
 		e.preventDefault();
 	}
 	if(keyID === 51 || keyID === 99)
@@ -1123,6 +1342,13 @@ function checkKeyUp(e){
 		vraag3.isThreeKey = false;
 		vraag4.isThreeKey = false;
 		vraag5.isThreeKey = false;
+		vraag6.isThreeKey = false;
+		vraag7.isThreeKey = false;
+		vraag8.isThreeKey = false;
+		vraag9.isThreeKey = false;
+		vraag10.isThreeKey = false;
+		vraag11.isThreeKey = false;
+		vraag12.isThreeKey = false;
 		e.preventDefault();
 	}
 		if(keyID === 122)//f11
