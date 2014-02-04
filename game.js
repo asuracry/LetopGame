@@ -54,11 +54,18 @@ function drawMenu() {
     ctxBg.drawImage(imgSprite,0,786,800,600,0,0,800,600);
 }
 
-
+// start of clear funties
 
 function clearCtxBg() {
     ctxBg.clearRect(0,0,gameWidth,gameHeight);
 }
+
+function clearCtxAvatar(){
+	ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
+}
+
+// end of clear functies
+
 
 //end of main functions
 
@@ -88,25 +95,42 @@ function Achtergrond(){
     this.srcY = 0;
     this.drawX = 0;
     this.drawY = 0;
-    this.width = 800;
+    this.width = 2400;
     this.height= 600;
+    this.speed = 3;
+    this.isUpKey = false;
+	this.isRightKey = false;
+	this.isDownKey = false;
+	this.isLeftKey = false;
+	this.isEscapeKey=false;
+	this.leftX = this.drawX;
+	this.rightX = this.drawX + this.width;
+	this.topY = this.drawY;
+	this.bottomY = this.drawY + this.height;
     
 }
 
 Achtergrond.prototype.draw = function()
 {
+	this.updateCoors();
 	clearCtxBg();
+	this.checkKeys();
 	ctxBg.drawImage(imgSprite,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
 	
 
 }
-Avatar.prototype.updateCoors = function(){
+
+Achtergrond.prototype.updateCoors = function(){
 this.leftX = this.drawX;
 this.rightX = this.drawX + this.width;
 this.topY = this.drawY;
 this.bottomY = this.drawY + this.height;
 }
 
+Avatar.prototype.updateCoors = function(){
+this.topY = this.drawY;
+this.bottomY = this.drawY + this.height;
+}
 
 Avatar.prototype.draw = function() {
 this.updateCoors();
@@ -119,23 +143,14 @@ function resetGame(){
  location.reload();	
 }
 
-Avatar.prototype.checkKeys = function() {
-	if(this.isUpKey && this.topY > 80 ) {
-		this.drawY -= this.speed;
-	}
-	if(this.isRightKey && this.rightX < gameWidth) {
-		this.drawX += this.speed;
-		
-	}
-	if(this.isRightKey && this.rightX === gameWidth) {// voor naar de 2e kamer te gaan
-
-	}
-	if(this.isDownKey && this.bottomY < 490) {
-		this.drawY += this.speed;
-	}
-	if(this.isLeftKey && this.leftX > 0) {
+Achtergrond.prototype.checkKeys = function() {
+	if(this.isRightKey) {
 		this.drawX -= this.speed;
 	}
+	if(this.isLeftKey)
+	{
+		this.drawX += this.speed;
+	}	
 	if(this.isEscapeKey)
 	{
 		resetGame();
@@ -143,7 +158,14 @@ Avatar.prototype.checkKeys = function() {
 	
 }
 
-
+Avatar.prototype.checkKeys = function(){
+	if(this.isUpKey &&this.topY > 110){
+		this.drawY -= this.speed;
+	}
+	if(this.isDownKey && this.bottomY < 490){
+		this.drawY += this.speed;
+	}
+}
 
 function clearCtxAvatar() {
     ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
@@ -195,7 +217,7 @@ function checkKeyDown(e){
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
 	}
 	if (keyID === 39 || keyID ===68) { 
-		avatar1.isRightKey=true;
+		achtergrond1.isRightKey=true;
 		e.preventDefault();
 	}
 	if (keyID === 40 || keyID ===83) { 
@@ -203,11 +225,11 @@ function checkKeyDown(e){
 		e.preventDefault();
 	}
 	if (keyID === 37 || keyID ===65) { 
-		avatar1.isLeftKey=true;
+		achtergrond1.isLeftKey=true;
 		e.preventDefault();
 	}
 	if(keyID=== 27){
-		avatar1.isEscapeKey=true;
+		achtergrond1.isEscapeKey=true;
 		e.preventDefault();
 	}
 	
@@ -223,7 +245,7 @@ function checkKeyUp(e){
 		e.preventDefault();//zorgt ervoor dat er niet gescrolled kan worden, alleen in game movements
 	}
 	if (keyID === 39 || keyID ===68) { 
-		avatar1.isRightKey=false;
+		achtergrond1.isRightKey=false;
 		e.preventDefault();
 	}
 	if (keyID === 40 || keyID ===83) { 
@@ -231,12 +253,12 @@ function checkKeyUp(e){
 		e.preventDefault();
 	}
 	if (keyID === 37 || keyID ===65) { 
-		avatar1.isLeftKey=false;
+		achtergrond1.isLeftKey=false;
 		e.preventDefault();
 		
 	}
 	if(keyID=== 27){
-		avatar1.isEscapeKey=false;
+		achtergrond1.isEscapeKey=false;
 		e.preventDefault();
 	}
 
