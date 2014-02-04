@@ -13,6 +13,9 @@ var ctxResultatenScherm = canvasResultatenScherm.getContext('2d');
 var canvasResultaat = document.getElementById('canvasResultaat');
 var ctxResultaat = canvasResultaat.getContext('2d');
 
+var canvasMenu = document.getElementById('canvasMenu');
+var ctxMenu = canvasMenu.getContext('2d');
+
 var vraag1;
 var vraag2;
 var avatar1;
@@ -37,8 +40,8 @@ var imgSprite = new Image();
 imgSprite.src = 'sprite4.png';
 imgSprite.addEventListener('load',init,false);
 
-var imgMenu = new Image();
-imgMenu.src = 'menu.png';
+var imgStartMenu = new Image();
+imgStartMenu.src = 'startmenu.png';
 
 var imgResultatenScherm = new Image();
 imgResultatenScherm.src = 'resultatenscherm.png';
@@ -46,10 +49,12 @@ imgResultatenScherm.src = 'resultatenscherm.png';
 var imgResultaat = new Image();
 imgResultaat.src = 'cijfer.png';
 
+var imgMenu = new Image();
+imgMenu.src = 'menu.png';
 
 //main functions
 function init() {
-	drawMenu();
+	drawStartMenu();
 	document.addEventListener('click',mouseClicked,false);
 	
 }
@@ -71,6 +76,7 @@ function draw() {
 
 	achtergrond1.draw();
 	avatar1.draw();
+	drawMenu();
 	
 }
 
@@ -78,20 +84,25 @@ function startDrawing() {
     stopDrawing();
     drawInterval = setInterval(draw,fps);
 }
+function drawMenu(){
+		ctxMenu.drawImage(imgMenu,0,0,800,600,600,500,800,600);
+}
 
 function stopDrawing() {
     clearInterval(drawInterval);
 }
-function drawMenu() {
-    ctxBg.drawImage(imgMenu,0,0,800,600,0,0,800,600);
+function drawStartMenu() {
+    ctxBg.drawImage(imgStartMenu,0,0,800,600,0,0,800,600);
 }
 
 function drawResultatenScherm(){
 	clearAll();
+	clearCtxMenu();
 	ctxResultatenScherm.drawImage(imgResultatenScherm,0,0,800,600,0,0,800,600);
 	resultaat.draw();
 	//console.log('Score:', score);
 }
+
 
 // start of clear funties
 
@@ -102,6 +113,10 @@ function clearCtxBg() {
 
 function clearCtxAvatar(){
 	ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
+}
+
+function clearCtxMenu(){
+	ctxMenu.clearRect(0,0,800,600);
 }
 
 function clearAll(){ 
@@ -231,7 +246,7 @@ this.checkKeys();
 }
 
 Vraag.prototype.checkKeys= function(){
-if(vraag1.isOneKey === true)
+if(vraag1.isOneKey === true)//koeklast
 	{
 	score += 1;
 	clearCtxVraag();
@@ -247,7 +262,7 @@ if(vraag1.isThreeKey === true)
 	clearCtxVraag();
 	tekenVraag = 0;
 	}
-if(vraag2.isOneKey === true)
+if(vraag2.isOneKey === true)//tv
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
@@ -334,7 +349,9 @@ Avatar.prototype.checkKeys = function(){
 	}
 	if(tekenVraag === 1)
 	{
+		clearCtxMenu();
 		vraag1.draw();
+		
 	}
 	if(tekenVraag ===2)
 	{
@@ -414,46 +431,39 @@ function checkKeyDown(e){
 		avatar1.isRkey = true;
 		e.preventDefault();
 	}
-	if(keyID === 69)
-	{
+	if(keyID === 69){
 		achtergrond1.isEkey=true;
 		e.preventDefault();
 	}
-	if(keyID === 81)
-	{
+	if(keyID === 81){
 		vraag1.isQKey = true;
 		
 		e.preventDefault();
 	}
-	if(keyID === 49 && tekenVraag ===1)
-	{
+	if((keyID === 49 || keyID===97) && tekenVraag ===1){
 		vraag1.isOneKey = true;
 		e.preventDefault();
 
 	}
-	if(keyID === 49 && tekenVraag ===2)
+	if((keyID === 49 || keyID===97) && tekenVraag ===2)
 	{
 		vraag2.isOneKey = true;
 		e.preventDefault();
 
 	}
-	if(keyID === 50 && tekenVraag ===1 )
-	{
+	if((keyID === 50 || keyID===98) && tekenVraag ===1 ){
 		vraag1.isTwoKey = true;
 		e.preventDefault();
 	}
-	if(keyID === 50 && tekenVraag ===2 )
-	{
+	if((keyID === 50 || keyID=== 98) && tekenVraag ===2 ){
 		vraag2.isTwoKey = true;
 		e.preventDefault();
 	}
-	if(keyID === 51 && tekenVraag===1)
-	{
+	if((keyID === 51 || keyID=== 99) && tekenVraag===1){
 		vraag1.isThreeKey = true;
 		e.preventDefault();
 	}
-	if(keyID === 51 && tekenVraag===2)
-	{
+	if((keyID === 51 || keyID=== 99) && tekenVraag===2){
 		vraag2.isThreeKey = true;
 		e.preventDefault();
 	}
@@ -505,18 +515,19 @@ function checkKeyUp(e){
 		//tekenVraag = 0;
 		e.preventDefault();
 	}
-	if(keyID === 49)
+	if(keyID === 49 || keyID === 97)
 	{
 		vraag1.isOneKey = false;
 		vraag2.isOneKey = false;
 		e.preventDefault();
-	}if(keyID === 50)
+	}
+	if(keyID === 50 || keyID === 98)
 	{
 		vraag1.isTwoKey = false;
 		vraag2.isTwoKey=false;
 		e.preventDefault();
 	}
-	if(keyID === 51)
+	if(keyID === 51 || keyID === 99)
 	{
 		vraag1.isThreeKey = false;
 		vraag2.isThreeKey = false;
