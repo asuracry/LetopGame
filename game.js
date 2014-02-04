@@ -43,7 +43,6 @@ var ctxHand = canvasHand.getContext('2d');
 
 
 
-
   
 
 var helpIsDrawn = false;
@@ -105,7 +104,7 @@ var imgResultaat = new Image();
 imgResultaat.src = 'cijfers.png';
 
 var imgMenu = new Image();
-imgMenu.src = 'introductie.png';
+imgMenu.src = 'introductie2.png';
 
 var imgChecklist = new Image();
 imgChecklist.src = 'telefoonchecklist.png';
@@ -128,11 +127,14 @@ imgHand.src = 'cartoonhand.png';
 var imgTelefoonSms = new Image();
 imgTelefoonSms.src = 'telefoonsms.png';
 
+var imgHelpMenu2 = new Image();
+imgHelpMenu2.src = 'helpmenu2.png';
+
 var sound = new Audio('muziek.mp3');
 
 var checklistGetekend = false;
 
-
+var introductie = true;
 //var imgAfvinken = new Image();
 //imgAfvinken.src = 'menu.png';
 
@@ -182,7 +184,7 @@ function draw() {
 	drawMenu();
 	//drawBot();
 	//text.draw();
-		sound.play();
+		//sound.play();
 	}
 	
 
@@ -559,72 +561,161 @@ ctxChecklist.drawImage(imgChecklist,0,0,800,600,0,0,800,600);
 }
 
 Vraag.prototype.checkKeys= function(){
-if(vraag1.isOneKey === true)//begin van koeklast
+if(vraag1.isThree === true)//begin van koeklast
 	{
 	score += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
-if(vraag1.isTwoKey === true || vraag1.isThreeKey === true)
+if(vraag1.isOneKey === true || vraag1.isThreeKey === true)
 	{
 	vragenFout +=1;
 	clearCtxVraag();
 	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
-if(vraag2.isOneKey === true || vraag2.isTwoKey === true)//begin tv
+if(vraag2.isThreeKey === true || vraag2.isTwoKey === true)//begin tv
 	{
 	vragenFout +=1;
 	clearCtxVraag();
 	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
-if(vraag2.isThreeKey === true)//eind van tv
+if(vraag2.isOneKey === true)//eind van tv
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 if(vraag3.isOneKey === true || vraag3.isThreeKey === true)//begin van poster
 	{
 	vragenFout += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 if(vraag3.isTwoKey === true)//einde van de poster
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
-if(vraag4.isOneKey === true)//begin van schilderij
+if(vraag4.isThreeKey === true)//begin van schilderij
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
-if(vraag4.isTwoKey === true || vraag4.isThreeKey === true)
+if(vraag4.isTwoKey === true || vraag4.isOneKey === true)
 	{
 	vragenFout += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 if(vraag5.isOneKey === true || vraag5.isTwoKey === true)//begin van game
 	{
 	vragenFout += 1;
 	clearCtxVraag();
 	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 if(vraag5.isThreeKey === true)//eind van game
 	{
 	clearCtxVraag();
 	tekenVraag = 0;
 	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
+if(vraag6.isTwoKey === true || vraag6.isThreeKey === true)//begin van prullebak
+	{
+	vragenFout += 1;
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+if(vraag6.isOneKey === true)//eind van prullebak
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+if(vraag7.isOneKey === true || vraag7.isThreeKey === true)//begin van agenda
+	{
+	vragenFout += 1;
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+if(vraag7.isTwoKey === true)//eind van agenda
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+	
+if(vraag8.isOneKey === true || vraag8.isThreeKey === true)//begin van game
+	{
+	vragenFout += 1;
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+if(vraag8.isTwoKey === true)//eind van game
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+if(vraag9.isOneKey === true || vraag9.isTwoKey === true)//begin van hond & bed
+	{
+	vragenFout += 1;
+	clearCtxVraag();
+	tekenVraag = 0;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+if(vraag9.isThreeKey === true)//eind van hond & bed
+	{
+	clearCtxVraag();
+	tekenVraag = 0;
+	score += 1;
+	console.log('score:', score);
+	console.log('fout:', vragenFout);
+	}
+
+
 if(vraag10.isTwoKey === true)
 	{	
 		
 		clearCtxVraag();
 		tekenVraag = 0;
 		score += 1;
+		console.log('score:', score);
+	console.log('fout:', vragenFout);
 		
 	}
 if(vraag10.isOneKey === true || vraag10.isThreeKey == true)
@@ -632,12 +723,16 @@ if(vraag10.isOneKey === true || vraag10.isThreeKey == true)
 		vragenFout += 1;
 		clearCtxVraag();
 		tekenVraag = 0;
+		console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 if(vraag11.isThreeKey === true)
 	{	
 		clearCtxVraag();
 		tekenVraag = 0;
 		score += 1;
+		console.log('score:', score);
+	console.log('fout:', vragenFout);
 		
 	}
 if(vraag11.isOneKey === true || vraag11.isTwoKey == true)
@@ -645,12 +740,16 @@ if(vraag11.isOneKey === true || vraag11.isTwoKey == true)
 		vragenFout += 1;
 		clearCtxVraag();
 		tekenVraag = 0;
+		console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 if(vraag12.isOneKey === true)
 	{	
 		clearCtxVraag();
 		tekenVraag =0;
 		score += 1;
+		console.log('score:', score);
+	console.log('fout:', vragenFout);
 		
 	}
 if(vraag12.isTwoKey === true || vraag12.isThreeKey == true)
@@ -658,6 +757,8 @@ if(vraag12.isTwoKey === true || vraag12.isThreeKey == true)
 		vragenFout += 1;
 		clearCtxVraag();
 		tekenVraag = 0;
+		console.log('score:', score);
+	console.log('fout:', vragenFout);
 	}
 	
 
@@ -808,11 +909,7 @@ Avatar.prototype.checkKeys = function(){
 		tekenVraag = 4;
 		vraag4Beantwoord = true;
 	}
-		if(this.isSpaceBarKey && achtergrond1.drawX <=-3020 && achtergrond1.drawX >= -3092 && vraag8Beantwoord === false)//berekening voor de beer vraag
-	{
-		tekenVraag = 8;
-		vraag8Beantwoord = true;
-	}
+		
 		if(this.isSpaceBarKey && achtergrond1.drawX <= -2076 && achtergrond1.drawX >= -2444 && this.drawY === 50 && vraag5Beantwoord === false)//berekening voor het familie portret
 	{
 		tekenVraag = 5;
@@ -827,6 +924,11 @@ Avatar.prototype.checkKeys = function(){
 	{
 		tekenVraag = 7;
 		vraag7Beantwoord = true;
+	}
+	if(this.isSpaceBarKey && achtergrond1.drawX <=-3020 && achtergrond1.drawX >= -3092 && vraag8Beantwoord === false)//berekening voor de beer vraag
+	{
+		tekenVraag = 8;
+		vraag8Beantwoord = true;
 	}
 	if(this.isSpaceBarKey && achtergrond1.drawX <= -3496 && achtergrond1.drawX >= -3648 && this.drawY === 50 && vraag9Beantwoord === false)// berekening voor de hond
 		{
@@ -971,6 +1073,10 @@ function mouseClicked(e){
 	if(btnPlay.checkClicked())playGame();
 }
 
+function introductie(){
+	ctxHelp.drawImage(imgHelpMenu2,0,0,800,600,0,0,800,600);
+
+}
 
 function checkKeyDown(e){
 	var keyID = e.keyCode || e.which;
