@@ -29,10 +29,9 @@ function init() {
 
 // functie van het opstarten en spelen van de game
 function playGame(){
-	//drawBg(); wordt eruit gelaten aangezien de achtergrond een object wordt!
     startDrawing();
 	avatar1 = new Avatar();
-	achtgerond1 = new Achtergrond();
+	achtergrond1 = new Achtergrond();
 	document.addEventListener('keydown',checkKeyDown,false);
 	document.addEventListener('keyup',checkKeyUp,false);
 	document.removeEventListener('click',mouseClicked,false);// zorgt ervoor dat de game niet opnieuw kan worden
@@ -40,6 +39,7 @@ function playGame(){
 
 function draw() {
  avatar1.draw();
+ achtergrond1.draw();
 }
 
 function startDrawing() {
@@ -84,11 +84,21 @@ this.bottomY = this.drawY + this.height;
 }
 
 function Achtergrond(){
-   var srcX = 0;
-    var srcY = 0;
-    var drawX = 0;
-    var drawY = 0;
-    ctxBg.drawImage(imgSprite,0,0,gameWidth,gameHeight,0,0,gameWidth,gameHeight);
+    this.srcX = 0;
+    this.srcY = 0;
+    this.drawX = 0;
+    this.drawY = 0;
+    this.width = 800;
+    this.height= 600;
+    
+}
+
+Achtergrond.prototype.draw = function()
+{
+	clearCtxBg();
+	ctxBg.drawImage(imgSprite,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
+	
+
 }
 Avatar.prototype.updateCoors = function(){
 this.leftX = this.drawX;
@@ -137,6 +147,10 @@ Avatar.prototype.checkKeys = function() {
 
 function clearCtxAvatar() {
     ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
+}
+
+function clearCtxBg(){
+	ctxBg.clearRect(0,0,gameWidth,gameHeight);
 }
 //end of avatar functions
 
