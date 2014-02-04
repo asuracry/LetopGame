@@ -16,10 +16,14 @@ var drawInterval;
 
 
 
+
+
 var imgSprite = new Image();
-imgSprite.src = 'sprite3.png';
+imgSprite.src = 'sprite4.png';
 imgSprite.addEventListener('load',init,false);
 
+var imgMenu = new Image();
+imgMenu.src = 'menu.png';
 
 //main functions
 function init() {
@@ -52,30 +56,31 @@ function stopDrawing() {
     clearInterval(drawInterval);
 }
 function drawMenu() {
-    ctxBg.drawImage(imgSprite,0,786,800,600,0,0,800,600);
+    ctxBg.drawImage(imgMenu,0,0,800,600,0,0,800,600);
 }
 
+function drawVoorbeeldVraag(){
+	ctxBg.drawImage(imgVoorbeeldVraag,0,0,800,600,0,0,800,600);
+}
 // start of clear funties
 
 function clearCtxBg() {
-	stopDrawing();
+	
     ctxBg.clearRect(0,0,gameWidth,gameHeight);
-    achter1.clearRect(0,0,gameWidth,gameHeight);//erbij
-    achtergrond1.clearRect(0,0,gameWidth,gameHeight);//erbij
 }
 
 function clearCtxAvatar(){
 	ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
 }
 
-function pauseGame(){
+// function pauseGame(){
 
-	//c
-	//clearCtxBg();
-	imgSprite.clear();
-	console.log('Game gepauzeerd')
+// 	//c
+// 	//clearCtxBg();
+// 	imgSprite.clear();
+// 	console.log('Game gepauzeerd')
 
-}
+// }
 
 // end of clear functies
 
@@ -89,7 +94,7 @@ this.srcY=600;//begintpunt van y
 this.drawX=220;//x punt waar het getekent wordt op het canvas
 this.drawY=200;//y punt waar het getekent wordt op het canvas
 this.width=100;//breedte van de char
-this.height=185;//hoogte van de char
+this.height=190;//hoogte van de char
 this.speed = 3;
 this.isUpKey = false;
 this.isRightKey = false;
@@ -112,7 +117,7 @@ function Achtergrond(){
     this.srcY = 0;
     this.drawX = 0;
     this.drawY = 0;
-    this.width = 2400;
+    this.width = 2949;
     this.height= 600;
     this.speed = 3;
     this.isUpKey = false;
@@ -135,7 +140,7 @@ Achtergrond.prototype.draw = function()
 	clearCtxBg();
 	this.checkKeys();
 	ctxBg.drawImage(imgSprite,this.srcX,this.srcY,this.width,this.height,this.drawX,this.drawY,this.width,this.height);
-	
+
 
 }
 
@@ -166,7 +171,7 @@ Achtergrond.prototype.checkKeys = function() {
 	if(this.isRightKey && this.drawX >= -2115) {
 		this.drawX -= this.speed;
 	}
-	if(this.isLeftKey &&  this.drawX <= 219)
+	if(this.isLeftKey &&  this.drawX <= -3)
 	{
 		this.drawX += this.speed;
 	}	
@@ -195,7 +200,8 @@ Avatar.prototype.checkKeys = function(){
 	if(this.isSpaceBarKey && this.topY === 110 && achtergrond1.drawX <= 135 && achtergrond1.drawX >= 27)
 	{
 		console.log('koelkast event');
-		pauseGame();
+		//drawVoorbeeldVraag();
+		clearCtxBg();
 	}
 	if(this.isRkey){
 		console.log('Y:' , this.drawY);
@@ -206,20 +212,13 @@ Avatar.prototype.checkKeys = function(){
 
 function clearCtxAvatar() {
     ctxAvatar.clearRect(0,0,gameWidth,gameHeight);
+
 }
 
 function clearCtxBg(){
 	ctxBg.clearRect(0,0,gameWidth,gameHeight);
 }
 //end of avatar functions
-
-//start of voorbeeldVraag functies
-function Vragen(){
-}
-
-
-
-//end of voorbeeldVraag functies
 
 
 //button object
